@@ -1,10 +1,13 @@
 import React from "react";
+import Navbar from "../components/common/Navbar/Navbar";
+import MainPage from "../components/MainPage";
 
 const Main: React.FC = () => {
   return (
-    <div>
-      <h1>Main Page</h1>
-    </div>
+    <>
+      <Navbar></Navbar>
+      <MainPage></MainPage>
+    </>
   );
 };
 
