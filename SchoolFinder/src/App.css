@@ -3,6 +3,7 @@
 @tailwind utilities;
 #root {
   text-align: center;
+  overflow-x: hidden;
 }
 
 .logo {
