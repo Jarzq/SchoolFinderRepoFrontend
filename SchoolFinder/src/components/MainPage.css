@@ -13,6 +13,15 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.descriptionSection {
+  margin-top: -5vh;
+  width: 37vw;
+  color: white;
+  font-size: 18px;
+  text-align: left;
+  line-height: 123%;
+}
 .titleListSection {
   display: flex;
   color: white;
@@ -22,18 +31,9 @@
   line-height: 123%;
   justify-content: flex-start;
   align-items: center;
-  flex-direction: row-reverse;
-}
-.descriptionSection {
-  margin-top: -5vh;
-  width: 38vw;
-  color: white;
-  font-size: 18px;
-  text-align: left;
-  line-height: 123%;
 }
 .descriptionListSection {
-  margin-top: -5vh;
+  margin-top: 1vh;
   width: 38vw;
   color: white;
   font-size: 18px;
@@ -44,12 +44,27 @@
   min-width: 30vw;
 }
 .actionButton {
-  margin: 5vh 0 5vw 0;
+  height: 50px;
+  margin: 5vh 0 10vw 0;
   color: white;
   width: 50vw;
+  font-size: 18px;
+  font-weight: 600;
+}
+.actionListButton {
+  margin: 0vh 0 10vw 0;
+  color: white;
+  width: 50vw;
+  height: 50px;
+  font-size: 18px;
+  font-weight: 600;
 }
 .mainWrapper {
   overflow-x: hidden;
+}
+.textContainer {
+  display: block;
+  margin-left: 3vw;
 }
 @media (max-width: 1024px) {
   .descriptionSection {

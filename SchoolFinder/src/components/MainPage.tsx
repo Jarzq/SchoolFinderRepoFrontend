@@ -1,6 +1,7 @@
 import React from "react";
 import "./MainPage.css";
 import purpleIlustration from "../assets/PurpleIlustration.svg";
+import lupa from "../assets/lupa.svg";
 import { Link } from "react-router-dom";
 
 const Main: React.FC = () => {
@@ -13,7 +14,11 @@ const Main: React.FC = () => {
             do swoich
             <br /> preferencji
           </p>
-          <img src={purpleIlustration} alt="Purple Illustration" />
+          <img
+            src={purpleIlustration}
+            alt="Purple Illustration"
+            className="ml-5"
+          />
         </div>
         <p className="descriptionSection">
           Zaczniemy od wyliczenia Twoich punktów. Następnie wybierzesz
@@ -28,20 +33,24 @@ const Main: React.FC = () => {
         </Link>
 
         <div className="titleListSection">
-          <p className="calculatorTitle">
-            Filtruj i sortuj szkoły
-            <br /> jak tylko zechcesz
-          </p>
-          <img src={purpleIlustration} alt="Purple Illustration" />
+          <img src={lupa} alt="Purple Illustration" />
+          <div className="textContainer">
+            <p>
+              Filtruj i sortuj szkoły
+              <br /> jak tylko zechcesz
+            </p>
+            <p className="descriptionListSection">
+              Zaczniemy od wyliczenia Twoich punktów. Następnie wybierzesz
+              preferowane kryteria, takie jak lokalizacja, typ oddziału,
+              rozszerzone przedmioty i wiele innych. Nasz algorytm odnajdzie i
+              przedstawi Ci szkoły oraz oddziały, które doskonale spełniają
+              Twoje oczekiwania!
+            </p>
+          </div>
         </div>
-        <p className="descriptionListSection">
-          Zaczniemy od wyliczenia Twoich punktów. Następnie wybierzesz
-          preferowane kryteria, takie jak lokalizacja, typ oddziału, rozszerzone
-          przedmioty i wiele innych. Nasz algorytm odnajdzie i przedstawi Ci
-          szkoły oraz oddziały, które doskonale spełniają Twoje oczekiwania!
-        </p>
+
         <Link to="/listPage">
-          <button className="actionButton bg-primaryBlue">
+          <button className="actionListButton bg-primaryBlue">
             Przejdź do listy szkół
           </button>
         </Link>
