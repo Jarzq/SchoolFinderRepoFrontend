@@ -1,0 +1,32 @@
+.mainCalculatorContainer {
+}
+.sectionDivider {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  height: 68px;
+  background-color: #636363;
+  text-wrap: nowrap;
+}
+.formSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 20vw 0 20vw;
+}
+.checkboxStyle {
+  color: white !important;
+}
+.subSectionDivider {
+  text-align: left;
+  width: 100%;
+  border-bottom: 1px solid white;
+  font-size: 30px;
+}
+.formRow {
+  font-size: 18px;
+  text-wrap: nowrap;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-top: 3vh;
+}

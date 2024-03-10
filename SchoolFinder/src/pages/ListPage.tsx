@@ -1,10 +1,13 @@
 import React from "react";
+import Navbar from "../components/common/Navbar/Navbar";
+import List from "../components/ListPage/List";
 
 const SubPage2: React.FC = () => {
   return (
-    <div>
-      <h1>SubPage 2</h1>
-    </div>
+    <>
+      <Navbar></Navbar>
+      <List></List>
+    </>
   );
 };
 

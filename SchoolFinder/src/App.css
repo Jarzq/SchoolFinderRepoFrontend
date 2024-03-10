@@ -5,6 +5,9 @@
   text-align: center;
   overflow-x: hidden;
 }
+.bg-default-100 {
+  background-color: #3b3b3b !important;
+}
 
 .logo {
   height: 6em;
@@ -32,6 +35,9 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
+}
+.text-foreground {
+  color: white !important;
 }
 
 .card {

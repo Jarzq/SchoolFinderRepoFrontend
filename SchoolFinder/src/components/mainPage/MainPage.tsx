@@ -1,7 +1,7 @@
 import React from "react";
 import "./MainPage.css";
-import purpleIlustration from "../assets/PurpleIlustration.svg";
-import lupa from "../assets/lupa.svg";
+import purpleIlustration from "../../assets/PurpleIlustration.svg";
+import lupa from "../../assets/lupa.svg";
 import { Link } from "react-router-dom";
 
 const Main: React.FC = () => {

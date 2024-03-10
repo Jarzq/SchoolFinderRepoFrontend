@@ -1,5 +1,5 @@
 .mainNavbarContainer {
-  background-color: black;
+  background-color: #343434;
   font-size: 16px;
   color: white;
   width: 100vw;
@@ -17,6 +17,10 @@
 .chooseActionContainer {
   display: flex;
 }
-.ss {
-  margin-right: 5vw;
+.buttonNavbar {
+  color: white;
+}
+.buttonNavbar:hover {
+  cursor: pointer;
+  color: #aa9cff;
 }

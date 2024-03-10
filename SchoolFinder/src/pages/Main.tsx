@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/common/Navbar/Navbar";
-import MainPage from "../components/MainPage";
+import MainPage from "../components/mainPage/MainPage";
 
 const Main: React.FC = () => {
   return (
