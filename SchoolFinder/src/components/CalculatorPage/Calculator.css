@@ -6,17 +6,20 @@
   height: 68px;
   background-color: #636363;
   text-wrap: nowrap;
+  width: 100%;
 }
 .formSection {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 60vw;
   margin: 0 20vw 0 20vw;
 }
 .checkboxStyle {
   color: white !important;
 }
 .subSectionDivider {
+  margin: 3vh 0 3vh 0;
   text-align: left;
   width: 100%;
   border-bottom: 1px solid white;
@@ -25,8 +28,44 @@
 .formRow {
   font-size: 18px;
   text-wrap: nowrap;
+}
+.ant-form-item .ant-form-item-label > label {
+  color: white;
+}
+.ant-input-outlined {
+  background-color: #373737;
+  color: white;
+}
+.ant-input-outlined:hover {
+  background-color: #373737;
+  border-color: #aa9cff !important;
+}
+.formStyle {
+  color: white !important;
   display: flex;
-  width: 100%;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.inputStyle {
+  width: 120px;
+  color: white;
+  /* margin-left: 2vw; */
+}
+.ant-form-item .ant-form-item-control-input-content {
+  flex: none;
+}
+.customFormItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.inputContainer {
+  display: flex;
   align-items: center;
-  margin-top: 3vh;
+  gap: 8px; /* Adjust the spacing between inputs */
+}
+
+.inputStyle {
+  flex: 1; /* Allow inputs to take up remaining space */
 }
