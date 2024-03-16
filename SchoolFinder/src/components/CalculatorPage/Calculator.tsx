@@ -36,7 +36,7 @@ const Calculator: React.FC = () => {
             label="język polski"
             name="jezykPolski"
             rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ span: 8 }} // Set a fixed width for the label column
+            labelCol={{ flex: "150px" }}
             className="customFormItem"
             labelAlign="left"
           >
@@ -47,10 +47,10 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            label="język polski"
-            name="jezykPolski"
+            label="matematyka"
+            name="matematyka"
             rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ span: 8 }} // Set a fixed width for the label column
+            labelCol={{ flex: "150px" }}
             className="customFormItem"
             labelAlign="left"
           >
@@ -61,10 +61,10 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            label="język obcy"
+            label="język Obcy "
             name="jezykObcy"
             rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ span: 8 }} // Set a fixed width for the label column
+            labelCol={{ flex: "150px" }}
             className="customFormItem"
             labelAlign="left"
           >
@@ -73,6 +73,9 @@ const Calculator: React.FC = () => {
               <Input className="inputStyle" placeholder="Wynik [%]" />
             </div>
           </Form.Item>
+          <div className="subSectionDivider">
+            <p>Wynik z egzaminu ósmoklasisty</p>
+          </div>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">

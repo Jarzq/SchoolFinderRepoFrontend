@@ -17,9 +17,10 @@
 }
 .checkboxStyle {
   color: white !important;
+  margin-bottom: 3vh;
 }
 .subSectionDivider {
-  margin: 3vh 0 3vh 0;
+  margin: 0vh 0 3vh 0;
   text-align: left;
   width: 100%;
   border-bottom: 1px solid white;
@@ -31,6 +32,9 @@
 }
 .ant-form-item .ant-form-item-label > label {
   color: white;
+}
+.inputStyle.ant-input {
+  min-width: 100px;
 }
 .ant-input-outlined {
   background-color: #373737;
@@ -47,25 +51,21 @@
   flex-direction: column;
 }
 .inputStyle {
-  width: 120px;
+  width: 100px !important;
   color: white;
   /* margin-left: 2vw; */
 }
 .ant-form-item .ant-form-item-control-input-content {
   flex: none;
 }
-.customFormItem {
+/* .customFormItem {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
+} */
 
 .inputContainer {
   display: flex;
   align-items: center;
   gap: 8px; /* Adjust the spacing between inputs */
-}
-
-.inputStyle {
-  flex: 1; /* Allow inputs to take up remaining space */
 }
