@@ -1,8 +1,8 @@
 .mainCalculatorContainer {
 }
 .sectionDivider {
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  margin-top: 8vh;
+  margin-bottom: 8vh;
   height: 68px;
   background-color: #636363;
   text-wrap: nowrap;
@@ -37,11 +37,11 @@
   min-width: 100px;
 }
 .ant-input-outlined {
-  background-color: #373737;
+  background-color: #2b2b2b;
   color: white;
 }
 .ant-input-outlined:hover {
-  background-color: #373737;
+  background-color: #2b2b2b;
   border-color: #aa9cff !important;
 }
 .formStyle {
@@ -52,20 +52,74 @@
 }
 .inputStyle {
   width: 100px !important;
-  color: white;
-  /* margin-left: 2vw; */
+  color: white !important;
 }
-.ant-form-item .ant-form-item-control-input-content {
+.inputStyle::placeholder {
+  color: #71717a !important;
+}
+.inputStyle:focus {
+  background-color: #2b2b2b !important;
+}
+.ant .ant-form-item .ant-form-item-control-input-content {
   flex: none;
 }
-/* .customFormItem {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-} */
 
-.inputContainer {
+.formRowContainer {
   display: flex;
   align-items: center;
-  gap: 8px; /* Adjust the spacing between inputs */
+  gap: 8px;
+  align-items: baseline;
+}
+.extraSubjectContainer {
+  display: flex;
+}
+.selectStyle {
+  width: 130px !important;
+}
+.ant-select-selector {
+  background-color: #373737 !important;
+}
+.customFormItem {
+  color: white !important;
+  text-wrap: nowrap;
+  width: 100%;
+}
+
+.ant-input-outlined.ant-input-status-error:not(.ant-input-disabled) {
+  background-color: #2b2b2b !important;
+}
+.checkboxGroup {
+  color: white !important;
+  display: flex;
+  width: 100%;
+}
+.checkboxGroup2 {
+  display: flex;
+  width: 100%;
+}
+.ant-checkbox + span {
+  color: white !important;
+}
+.ant-radio-wrapper {
+  color: white;
+}
+.ant-checkbox-group {
+  width: 55vw !important;
+  column-gap: 2vw;
+  row-gap: 2vh;
+}
+.ant-row {
+  width: 100%;
+}
+.ant-row.ant-form-item-row {
+  width: 100%;
+  padding: 0;
+}
+.inputNumber {
+  width: 60px;
+}
+.description {
+  text-wrap: wrap;
+  text-align: left;
+  font-size: 11px;
 }
