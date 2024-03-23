@@ -1,5 +1,6 @@
 import React from "react";
 import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
+import "./SchoolEntity.css";
 
 interface SchoolEntityProps {
   data: SchoolEntityType;

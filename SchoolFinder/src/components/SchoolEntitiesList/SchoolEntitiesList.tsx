@@ -1,6 +1,7 @@
 import React from "react";
 import SchoolEntity from "../SchoolEntity/SchoolEntity";
 import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
+import "./SchoolEntitiesList.css";
 
 interface SchoolEntityListProps {
   data: SchoolEntityType[];
@@ -8,7 +9,8 @@ interface SchoolEntityListProps {
 
 const SchoolEntitiesList: React.FC<SchoolEntityListProps> = ({ data }) => {
   return (
-    <div className="SchoolEntitiesContainer">
+    <div className="schoolEntitiesContainer">
+      s
       {data.map((entity, index) => (
         <SchoolEntity key={index} data={entity} />
       ))}
