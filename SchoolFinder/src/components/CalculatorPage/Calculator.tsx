@@ -1,6 +1,6 @@
 import React from "react";
 import "./Calculator.css";
-import { Button, Checkbox, Form, Input, Radio, Select } from "antd";
+import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
 
 const Calculator: React.FC = () => {
   function onFinish(values: any): void {
@@ -339,7 +339,13 @@ const Calculator: React.FC = () => {
             labelAlign="left"
           >
             <div className="formRowContainer">
-              <Input className="inputNumber" placeholder="1" type="number" />
+              <Input
+                min={1}
+                max={10}
+                className="inputNumber"
+                placeholder="1"
+                type="number"
+              />
               <div>Ile z wybranych języków musi pasować?</div>
             </div>
             <p className="description">
@@ -354,10 +360,27 @@ const Calculator: React.FC = () => {
               chemia, geografia - wybierz "2", itd."
             </p>
           </Form.Item>
+
+          <div className="subSectionDivider">
+            <p>Zakres progu punktowego</p>
+          </div>
+          <p>
+            Wybierz przedział minimalnej liczby punktów, która jest potrzebna,
+            aby dostać się na dany profil
+          </p>
+          <Form.Item>
+            <Slider
+              range
+              defaultValue={[20, 50]}
+              min={0}
+              max={200}
+              className="slider"
+            />
+          </Form.Item>
           {/* ////////////////////////////submit button//////////////////////////// */}
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
+          <Form.Item>
+            <Button type="primary" htmlType="submit" className="submitButton">
+              Zapisz swój wybór i wyszukaj dopasowane do Ciebie oddziały
             </Button>
           </Form.Item>
         </div>
