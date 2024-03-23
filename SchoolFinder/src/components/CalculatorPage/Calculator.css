@@ -56,6 +56,7 @@
 }
 .inputStyle::placeholder {
   color: #71717a !important;
+  font-size: 12px;
 }
 .inputStyle:focus {
   background-color: #2b2b2b !important;
@@ -64,6 +65,10 @@
   flex: none;
 }
 
+.ant-select-selection-item {
+  color: white;
+  font-size: 12px;
+}
 .formRowContainer {
   display: flex;
   align-items: center;
@@ -88,15 +93,7 @@
 .ant-input-outlined.ant-input-status-error:not(.ant-input-disabled) {
   background-color: #2b2b2b !important;
 }
-.checkboxGroup {
-  color: white !important;
-  display: flex;
-  width: 100%;
-}
-.checkboxGroup2 {
-  display: flex;
-  width: 100%;
-}
+
 .ant-checkbox + span {
   color: white !important;
 }
@@ -108,13 +105,7 @@
   column-gap: 2vw;
   row-gap: 2vh;
 }
-.ant-row {
-  width: 100%;
-}
-.ant-row.ant-form-item-row {
-  width: 100%;
-  padding: 0;
-}
+
 .inputNumber {
   width: 60px;
 }
@@ -125,7 +116,7 @@
 }
 .submitButton {
   font-size: 20px;
-  margin-top: 5vh;
+  margin-top: 2vh;
   width: 60vw;
   background-color: #aa9cff !important;
   height: 50px;
@@ -134,6 +125,7 @@
   background-color: #8f7ff3 !important;
 }
 .slider {
+  margin-top: 5vh;
   width: 200px;
 }
 .ant-slider-horizontal .ant-slider-rail {
@@ -151,6 +143,12 @@
 .ant-slider .ant-slider-track:hover {
   background-color: #aa9cff;
 }
+.ant-slider .ant-slider-track:active {
+  background-color: #aa9cff;
+}
+.ant-slider:hover .ant-slider-track {
+  background-color: #aa9cff;
+}
 .ant-slider .ant-slider-handle::after {
   box-shadow: 0 0 0 2px #aa9cff;
 }
@@ -159,4 +157,10 @@
 }
 .ant-slider .ant-slider-handle:hover::after {
   box-shadow: 0 0 0 4px #aa9cff;
+}
+.ant-form-item .ant-form-item-control-input-content {
+  flex: none;
+}
+.ant-form-item .ant-form-item-explain-error {
+  text-align: left;
 }

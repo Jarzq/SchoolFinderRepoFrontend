@@ -65,7 +65,11 @@ const Calculator: React.FC = () => {
           >
             <div className="formRowContainer">
               <Input className="inputStyle" placeholder="Wynik [%]" />
-              <Input className="inputStyle" placeholder="Wynik [%]" />
+              <Input
+                className="inputStyle"
+                placeholder="Uzyskane punkty"
+                disabled
+              />
             </div>
           </Form.Item>
 
@@ -79,7 +83,11 @@ const Calculator: React.FC = () => {
           >
             <div className="formRowContainer">
               <Input className="inputStyle" placeholder="Wynik [%]" />
-              <Input className="inputStyle" placeholder="Wynik [%]" />
+              <Input
+                className="inputStyle"
+                placeholder="Uzyskane punkty"
+                disabled
+              />
             </div>
           </Form.Item>
 
@@ -93,7 +101,11 @@ const Calculator: React.FC = () => {
           >
             <div className="formRowContainer">
               <Input className="inputStyle" placeholder="Wynik [%]" />
-              <Input className="inputStyle" placeholder="Wynik [%]" />
+              <Input
+                className="inputStyle"
+                placeholder="Uzyskane punkty"
+                disabled
+              />
             </div>
           </Form.Item>
           <div className="subSectionDivider">
@@ -110,7 +122,11 @@ const Calculator: React.FC = () => {
           >
             <div className="formRowContainer">
               <Input className="inputStyle" placeholder="Wpisz ocenę" />
-              <Input className="inputStyle" placeholder="Wpisz ocenę" />
+              <Input
+                className="inputStyle"
+                placeholder="Uzyskane punkty"
+                disabled
+              />
             </div>
           </Form.Item>
 
@@ -124,7 +140,11 @@ const Calculator: React.FC = () => {
           >
             <div className="formRowContainer">
               <Input className="inputStyle" placeholder="Wpisz ocenę" />
-              <Input className="inputStyle" placeholder="Wpisz ocenę" />
+              <Input
+                className="inputStyle"
+                placeholder="Uzyskane punkty"
+                disabled
+              />
             </div>
           </Form.Item>
 
@@ -222,7 +242,10 @@ const Calculator: React.FC = () => {
           <Form.Item name="wolontariat" className="customFormItem">
             <div className="formRowContainer">
               <p className="text-white mb-4 ">Punkty za konkursy</p>
-              <Input className="inputStyle" placeholder="Uzyskane punkty" />
+              <Input
+                className="inputStyle"
+                placeholder="Podaj liczbę punktów"
+              />
             </div>
           </Form.Item>
         </div>
@@ -244,11 +267,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="dzielnica" className="customFormItem">
-            <Checkbox.Group
-              className="checkboxGroup2"
-              options={options}
-              style={{ width: "100%" }}
-            />
+            <Checkbox.Group options={options} style={{ width: "100%" }} />
           </Form.Item>
 
           <div className="subSectionDivider">
@@ -266,6 +285,7 @@ const Calculator: React.FC = () => {
           <div className="subSectionDivider">
             <p>Przedmioty rozszerzone</p>
           </div>
+
           <Form.Item
             name="przedmiotyRozszerzoneDontCount"
             className="customFormItem"
@@ -278,11 +298,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="przedmiotRozszerzony" className="customFormItem">
-            <Checkbox.Group
-              className="checkboxGroup2"
-              options={options}
-              style={{ width: "100%" }}
-            />
+            <Checkbox.Group options={options} style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
@@ -324,11 +340,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="przedmiotRozszerzony" className="customFormItem">
-            <Checkbox.Group
-              className="checkboxGroup2"
-              options={options}
-              style={{ width: "100%" }}
-            />
+            <Checkbox.Group options={options} style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
