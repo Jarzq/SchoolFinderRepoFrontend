@@ -1,11 +1,15 @@
 import React from "react";
 import "./Calculator.css";
 import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
+import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
+import mockedSchoolEntities from "../../mocks/MockedSchoolEntities";
 
 const Calculator: React.FC = () => {
   function onFinish(values: any): void {
     throw new Error("Function not implemented.");
   }
+
+  const mockedEntities = mockedSchoolEntities;
 
   const options = [
     "Wesoła",
@@ -397,6 +401,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
         </div>
       </Form>
+      <SchoolEntitiesList data={mockedEntities}></SchoolEntitiesList>
     </>
   );
 };
