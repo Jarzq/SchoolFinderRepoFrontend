@@ -3,6 +3,7 @@ import "./Calculator.css";
 import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
 import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
 import mockedSchoolEntities from "../../mocks/MockedSchoolEntities";
+import CalculateInput from "../CalculateInput/CalculateInput";
 
 const Calculator: React.FC = () => {
   const [knowPoints, setKnowPoints] = useState(false);
@@ -63,23 +64,11 @@ const Calculator: React.FC = () => {
               <div className="subSectionDivider">
                 <p>Oceny na świadectwie</p>
               </div>
-              <Form.Item
+              <CalculateInput
                 label="język polski"
                 name="jezykPolski"
-                rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                labelCol={{ flex: "150px" }}
-                className="customFormItem"
-                labelAlign="left"
-              >
-                <div className="formRowContainer">
-                  <Input className="inputStyle" placeholder="Wynik [%]" />
-                  <Input
-                    className="inputStyle"
-                    placeholder="Uzyskane punkty"
-                    disabled
-                  />
-                </div>
-              </Form.Item>
+                multiplyNumber={0.35}
+              />
               <Form.Item
                 label="matematyka"
                 name="matematyka"
