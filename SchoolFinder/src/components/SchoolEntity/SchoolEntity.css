@@ -5,3 +5,22 @@
   text-align: left;
   padding: 15px;
 }
+.titleSchoolName {
+  font-size: 28px;
+}
+.entityLabel {
+  display: flex;
+  color: #a1a1aa;
+
+  width: 50%;
+  margin-bottom: 0.5vh;
+}
+.entityValue {
+  margin-left: 1vw;
+  color: white;
+}
+.titleSchooEntitylName {
+  color: #a1a1aa;
+
+  border-bottom: solid 1px #3a3a3d;
+}

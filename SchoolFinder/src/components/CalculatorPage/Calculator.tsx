@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Calculator.css";
 import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
 import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
 import mockedSchoolEntities from "../../mocks/MockedSchoolEntities";
 
 const Calculator: React.FC = () => {
-  function onFinish(values: any): void {
-    throw new Error("Function not implemented.");
-  }
+  const [knowPoints, setKnowPoints] = useState(false);
+  const onFinish = (values) => {
+    console.log("Received values:", values);
+  };
 
   const mockedEntities = mockedSchoolEntities;
 
@@ -51,207 +52,203 @@ const Calculator: React.FC = () => {
         </div>
 
         <div className="formSection">
-          <Checkbox className="checkboxStyle">
+          <Checkbox
+            className="checkboxStyle"
+            onChange={(e) => setKnowPoints(e.target.checked)}
+          >
             Wiem już ile będę mieć punktów
           </Checkbox>
-          <div className="subSectionDivider">
-            <p>Oceny na świadectwie</p>
-          </div>
-          {/* <div className="subSection"> */}
-
-          <Form.Item
-            label="język polski"
-            name="jezykPolski"
-            rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ flex: "150px" }}
-            className="customFormItem"
-            labelAlign="left"
-          >
-            <div className="formRowContainer">
-              <Input className="inputStyle" placeholder="Wynik [%]" />
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-                disabled
-              />
-            </div>
-          </Form.Item>
-
-          <Form.Item
-            label="matematyka"
-            name="matematyka"
-            rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ flex: "150px" }}
-            className="customFormItem"
-            labelAlign="left"
-          >
-            <div className="formRowContainer">
-              <Input className="inputStyle" placeholder="Wynik [%]" />
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-                disabled
-              />
-            </div>
-          </Form.Item>
-
-          <Form.Item
-            label="język Obcy "
-            name="jezykObcy"
-            rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ flex: "150px" }}
-            className="customFormItem"
-            labelAlign="left"
-          >
-            <div className="formRowContainer">
-              <Input className="inputStyle" placeholder="Wynik [%]" />
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-                disabled
-              />
-            </div>
-          </Form.Item>
-          <div className="subSectionDivider">
-            <p>Wynik z egzaminu ósmoklasisty</p>
-          </div>
-
-          <Form.Item
-            label="język polski"
-            name="jezykPolski"
-            rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ flex: "150px" }}
-            className="customFormItem"
-            labelAlign="left"
-          >
-            <div className="formRowContainer">
-              <Input className="inputStyle" placeholder="Wpisz ocenę" />
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-                disabled
-              />
-            </div>
-          </Form.Item>
-
-          <Form.Item
-            label="matematyka"
-            name="matematyka"
-            rules={[{ required: true, message: "Proszę podaj wynik" }]}
-            labelCol={{ flex: "150px" }}
-            className="customFormItem"
-            labelAlign="left"
-          >
-            <div className="formRowContainer">
-              <Input className="inputStyle" placeholder="Wpisz ocenę" />
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-                disabled
-              />
-            </div>
-          </Form.Item>
-
-          <div className="extraSubjectContainer">
-            <Form.Item
-              name="extraSubject1"
-              rules={[{ required: true, message: "Proszę wybrać przedmiot" }]}
-              className="customFormItem"
-              labelAlign="left"
-              style={{ marginRight: 20 }}
-            >
-              <Select placeholder="Wybierz przedmiot" className="selectStyle">
-                <Option value="jezyk angielski">język angielski</Option>
-                <Option value="fizyka">fizyka</Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              name="extraSubject1Score"
+          {!knowPoints && (
+            
+              <><div className="subSectionDivider">
+              <p>Oceny na świadectwie</p>
+            </div><Form.Item
+              label="język polski"
+              name="jezykPolski"
               rules={[{ required: true, message: "Proszę podaj wynik" }]}
+              labelCol={{ flex: "150px" }}
               className="customFormItem"
               labelAlign="left"
             >
-              <div className="formRowContainer">
-                <Input className="inputStyle" placeholder="Wpisz ocenę" />
-                <Input
-                  className="inputStyle"
-                  placeholder="Uzyskane punkty"
-                  disabled
-                />
-              </div>
-            </Form.Item>
-          </div>
+                <div className="formRowContainer">
+                  <Input className="inputStyle" placeholder="Wynik [%]" />
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><Form.Item
+                label="matematyka"
+                name="matematyka"
+                rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                labelCol={{ flex: "150px" }}
+                className="customFormItem"
+                labelAlign="left"
+              >
+                <div className="formRowContainer">
+                  <Input className="inputStyle" placeholder="Wynik [%]" />
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><Form.Item
+                label="język Obcy "
+                name="jezykObcy"
+                rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                labelCol={{ flex: "150px" }}
+                className="customFormItem"
+                labelAlign="left"
+              >
+                <div className="formRowContainer">
+                  <Input className="inputStyle" placeholder="Wynik [%]" />
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><div className="subSectionDivider">
+                <p>Wynik z egzaminu ósmoklasisty</p>
+              </div><Form.Item
+                label="język polski"
+                name="jezykPolski"
+                rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                labelCol={{ flex: "150px" }}
+                className="customFormItem"
+                labelAlign="left"
+              >
+                <div className="formRowContainer">
+                  <Input className="inputStyle" placeholder="Wpisz ocenę" />
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><Form.Item
+                label="matematyka"
+                name="matematyka"
+                rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                labelCol={{ flex: "150px" }}
+                className="customFormItem"
+                labelAlign="left"
+              >
+                <div className="formRowContainer">
+                  <Input className="inputStyle" placeholder="Wpisz ocenę" />
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><div className="extraSubjectContainer">
+                <Form.Item
+                  name="extraSubject1"
+                  rules={[
+                    { required: true, message: "Proszę wybrać przedmiot" },
+                  ]}
+                  className="customFormItem"
+                  labelAlign="left"
+                  style={{ marginRight: 20 }}
+                >
+                  <Select
+                    placeholder="Wybierz przedmiot"
+                    className="selectStyle"
+                  >
+                    <Option value="jezyk angielski">język angielski</Option>
+                    <Option value="fizyka">fizyka</Option>
+                  </Select>
+                </Form.Item>
 
-          <div className="extraSubjectContainer">
-            <Form.Item
-              name="extraSubject2"
-              rules={[{ required: true, message: "Proszę wybrać przedmiot" }]}
-              className="customFormItem"
-              labelAlign="left"
-              style={{ marginRight: 20 }}
-            >
-              <Select placeholder="Wybierz przedmiot" className="selectStyle">
-                {/* TODO: fetch data from backend */}
-                <Option value="jezyk angielski">język angielski</Option>
-                <Option value="fizyka">fizyka</Option>
-              </Select>
-            </Form.Item>
+                <Form.Item
+                  name="extraSubject1Score"
+                  rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                  className="customFormItem"
+                  labelAlign="left"
+                >
+                  <div className="formRowContainer">
+                    <Input className="inputStyle" placeholder="Wpisz ocenę" />
+                    <Input
+                      className="inputStyle"
+                      placeholder="Uzyskane punkty"
+                      disabled />
+                  </div>
+                </Form.Item>
+              </div><div className="extraSubjectContainer">
+                <Form.Item
+                  name="extraSubject2"
+                  rules={[
+                    { required: true, message: "Proszę wybrać przedmiot" },
+                  ]}
+                  className="customFormItem"
+                  labelAlign="left"
+                  style={{ marginRight: 20 }}
+                >
+                  <Select
+                    placeholder="Wybierz przedmiot"
+                    className="selectStyle"
+                  >
+                    {/* TODO: fetch data from backend */}
+                    <Option value="jezyk angielski">język angielski</Option>
+                    <Option value="fizyka">fizyka</Option>
+                  </Select>
+                </Form.Item>
 
-            <Form.Item
-              name="extraSubject1Score"
-              rules={[{ required: true, message: "Proszę podaj wynik" }]}
-              className="customFormItem"
-              labelAlign="left"
-            >
-              <div className="formRowContainer">
-                <Input className="inputStyle" placeholder="Wpisz ocenę" />
-                <Input
-                  className="inputStyle"
-                  placeholder="Uzyskane punkty"
-                  disabled
-                />
-              </div>
-            </Form.Item>
-          </div>
-
-          <div className="subSectionDivider">
-            <p>dodatkowe aktywności</p>
-          </div>
-
-          <Form.Item name="swiadectwoZWyroznieniem" className="customFormItem">
+                <Form.Item
+                  name="extraSubject1Score"
+                  rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                  className="customFormItem"
+                  labelAlign="left"
+                >
+                  <div className="formRowContainer">
+                    <Input className="inputStyle" placeholder="Wpisz ocenę" />
+                    <Input
+                      className="inputStyle"
+                      placeholder="Uzyskane punkty"
+                      disabled />
+                  </div>
+                </Form.Item>
+              </div><div className="subSectionDivider">
+                <p>dodatkowe aktywności</p>
+              </div><Form.Item
+                name="swiadectwoZWyroznieniem"
+                className="customFormItem"
+              >
+                <div className="formRowContainer">
+                  <Checkbox className="text-white mb-4">
+                    Świadectwo z wyróżnieniem
+                  </Checkbox>
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><Form.Item name="wolontariat" className="customFormItem">
+                <div className="formRowContainer">
+                  <Checkbox className="text-white mb-4">Wolontariat</Checkbox>
+                  <Input
+                    className="inputStyle"
+                    placeholder="Uzyskane punkty"
+                    disabled />
+                </div>
+              </Form.Item><Form.Item name="wolontariat" className="customFormItem">
+                <div className="formRowContainer">
+                  <p className="text-white mb-4 ">Punkty za konkursy</p>
+                  <Input
+                    className="inputStyle"
+                    placeholder="Podaj liczbę punktów" />
+                </div>
+              </Form.Item></>
+            
+          ):(
+            <Form.Item name="obtainedPoints" className="customFormItem">
             <div className="formRowContainer">
-              <Checkbox className="text-white mb-4">
-                Świadectwo z wyróżnieniem
-              </Checkbox>
+              
               <Input
                 className="inputStyle"
                 placeholder="Uzyskane punkty"
-                disabled
               />
             </div>
           </Form.Item>
-
-          <Form.Item name="wolontariat" className="customFormItem">
-            <div className="formRowContainer">
-              <Checkbox className="text-white mb-4">Wolontariat</Checkbox>
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-                disabled
-              />
-            </div>
-          </Form.Item>
-
-          <Form.Item name="wolontariat" className="customFormItem">
-            <div className="formRowContainer">
-              <p className="text-white mb-4 ">Punkty za konkursy</p>
-              <Input
-                className="inputStyle"
-                placeholder="Podaj liczbę punktów"
-              />
-            </div>
-          </Form.Item>
+          )}
         </div>
 
         <div className="sectionDivider">
@@ -401,7 +398,14 @@ const Calculator: React.FC = () => {
           </Form.Item>
         </div>
       </Form>
-      <SchoolEntitiesList data={mockedEntities}></SchoolEntitiesList>
+      <SchoolEntitiesList
+        data={mockedEntities}
+        title="Oddziały pasujące w 100% do twoich preferencji"
+      ></SchoolEntitiesList>
+      <SchoolEntitiesList
+        data={mockedEntities}
+        title="Podobne oddziały różniące się jednym kryterium"
+      ></SchoolEntitiesList>
     </>
   );
 };
