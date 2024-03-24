@@ -58,26 +58,29 @@ const Calculator: React.FC = () => {
           >
             Wiem już ile będę mieć punktów
           </Checkbox>
-          {!knowPoints && (
-            
-              <><div className="subSectionDivider">
-              <p>Oceny na świadectwie</p>
-            </div><Form.Item
-              label="język polski"
-              name="jezykPolski"
-              rules={[{ required: true, message: "Proszę podaj wynik" }]}
-              labelCol={{ flex: "150px" }}
-              className="customFormItem"
-              labelAlign="left"
-            >
+          {!knowPoints ? (
+            <>
+              <div className="subSectionDivider">
+                <p>Oceny na świadectwie</p>
+              </div>
+              <Form.Item
+                label="język polski"
+                name="jezykPolski"
+                rules={[{ required: true, message: "Proszę podaj wynik" }]}
+                labelCol={{ flex: "150px" }}
+                className="customFormItem"
+                labelAlign="left"
+              >
                 <div className="formRowContainer">
                   <Input className="inputStyle" placeholder="Wynik [%]" />
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><Form.Item
+              </Form.Item>
+              <Form.Item
                 label="matematyka"
                 name="matematyka"
                 rules={[{ required: true, message: "Proszę podaj wynik" }]}
@@ -90,9 +93,11 @@ const Calculator: React.FC = () => {
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><Form.Item
+              </Form.Item>
+              <Form.Item
                 label="język Obcy "
                 name="jezykObcy"
                 rules={[{ required: true, message: "Proszę podaj wynik" }]}
@@ -105,11 +110,14 @@ const Calculator: React.FC = () => {
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><div className="subSectionDivider">
+              </Form.Item>
+              <div className="subSectionDivider">
                 <p>Wynik z egzaminu ósmoklasisty</p>
-              </div><Form.Item
+              </div>
+              <Form.Item
                 label="język polski"
                 name="jezykPolski"
                 rules={[{ required: true, message: "Proszę podaj wynik" }]}
@@ -122,9 +130,11 @@ const Calculator: React.FC = () => {
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><Form.Item
+              </Form.Item>
+              <Form.Item
                 label="matematyka"
                 name="matematyka"
                 rules={[{ required: true, message: "Proszę podaj wynik" }]}
@@ -137,9 +147,11 @@ const Calculator: React.FC = () => {
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><div className="extraSubjectContainer">
+              </Form.Item>
+              <div className="extraSubjectContainer">
                 <Form.Item
                   name="extraSubject1"
                   rules={[
@@ -169,10 +181,12 @@ const Calculator: React.FC = () => {
                     <Input
                       className="inputStyle"
                       placeholder="Uzyskane punkty"
-                      disabled />
+                      disabled
+                    />
                   </div>
                 </Form.Item>
-              </div><div className="extraSubjectContainer">
+              </div>
+              <div className="extraSubjectContainer">
                 <Form.Item
                   name="extraSubject2"
                   rules={[
@@ -203,12 +217,15 @@ const Calculator: React.FC = () => {
                     <Input
                       className="inputStyle"
                       placeholder="Uzyskane punkty"
-                      disabled />
+                      disabled
+                    />
                   </div>
                 </Form.Item>
-              </div><div className="subSectionDivider">
+              </div>
+              <div className="subSectionDivider">
                 <p>dodatkowe aktywności</p>
-              </div><Form.Item
+              </div>
+              <Form.Item
                 name="swiadectwoZWyroznieniem"
                 className="customFormItem"
               >
@@ -219,35 +236,40 @@ const Calculator: React.FC = () => {
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><Form.Item name="wolontariat" className="customFormItem">
+              </Form.Item>
+              <Form.Item name="wolontariat" className="customFormItem">
                 <div className="formRowContainer">
                   <Checkbox className="text-white mb-4">Wolontariat</Checkbox>
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
-                    disabled />
+                    disabled
+                  />
                 </div>
-              </Form.Item><Form.Item name="wolontariat" className="customFormItem">
+              </Form.Item>
+              <Form.Item name="wolontariat" className="customFormItem">
                 <div className="formRowContainer">
                   <p className="text-white mb-4 ">Punkty za konkursy</p>
                   <Input
                     className="inputStyle"
-                    placeholder="Podaj liczbę punktów" />
+                    placeholder="Podaj liczbę punktów"
+                  />
                 </div>
-              </Form.Item></>
-            
-          ):(
+              </Form.Item>
+            </>
+          ) : (
             <Form.Item name="obtainedPoints" className="customFormItem">
-            <div className="formRowContainer">
-              
-              <Input
-                className="inputStyle"
-                placeholder="Uzyskane punkty"
-              />
-            </div>
-          </Form.Item>
+              <div className="formRowContainer">
+                <Input
+                  type="number"
+                  className="inputStyle"
+                  placeholder="Uzyskane punkty"
+                />
+              </div>
+            </Form.Item>
           )}
         </div>
 
