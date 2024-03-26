@@ -28,6 +28,7 @@ const List: React.FC = () => {
   const [selectedSubjects, setSelectedSubjectsType] = useState<string[] | null>(
     null
   );
+  const [sortOption, setSortOption] = useState<string | null>(null);
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
@@ -101,40 +102,66 @@ const List: React.FC = () => {
     );
   };
 
+  const handleSortChange = (value: string | null) => {
+    setSortOption(value);
+    filterData(
+      searchValue,
+      selectedDistrict,
+      selectedType,
+      selectedLanguages,
+      selectedSpecialization,
+      selectedSubjects,
+      value
+    );
+  };
+
   const filterData = (
     search: string,
     district: string | null,
     type: SCHOOL_TYPE | null,
     languages: string[] | null,
     specialization: string | null,
-    subjects: string[] | null
+    subjects: string[] | null,
+    sortOption?: string | null
   ) => {
     let filtered = mockedSchoolEntities.filter((entity) =>
       entity.schoolName.toLowerCase().includes(search.toLowerCase())
     );
 
-    if (languages !== null && languages.length > 0) {
+    if (languages !== null && languages !== undefined && languages.length > 0) {
       filtered = filtered.filter((entity) =>
         languages.every((lang) => entity.languages.includes(lang))
       );
     }
-    if (district !== null) {
+    if (district !== null && district !== undefined) {
       filtered = filtered.filter((entity) => entity.dzielnica === district);
     }
 
-    if (type !== null) {
+    if (type !== null && type !== undefined) {
       filtered = filtered.filter((entity) => entity.type === type);
     }
 
-    if (specialization !== null) {
+    if (specialization !== null && specialization !== undefined) {
       filtered = filtered.filter(
         (entity) => entity.specialization === specialization
       );
     }
-    if (subjects !== null && subjects.length > 0) {
+    if (subjects !== null && subjects !== undefined && subjects.length > 0) {
       filtered = filtered.filter((entity) =>
         subjects.every((subj) => entity.extendedSubjects.includes(subj))
       );
+    }
+
+    if (sortOption !== null) {
+      if (sortOption === "name") {
+        filtered = filtered.sort((a, b) =>
+          a.schoolName.localeCompare(b.schoolName)
+        );
+      } else if (sortOption === "minPointsAsc") {
+        filtered = filtered.sort((a, b) => a.minPoints - b.minPoints);
+      } else if (sortOption === "minPointsDesc") {
+        filtered = filtered.sort((a, b) => b.minPoints - a.minPoints);
+      }
     }
 
     setFilteredData(filtered);
@@ -145,12 +172,6 @@ const List: React.FC = () => {
       <div className="mainListContainer">
         <p className="titleListPage">Lista oddziałów</p>
         <div className="filtersContainer">
-          <Search
-            placeholder="Search by school name"
-            onSearch={handleSearch}
-            onChange={(e) => handleSearch(e.target.value)}
-            style={{ width: 200, marginRight: 10 }}
-          />
           <Select
             placeholder="Filter by district"
             style={{ width: 200, marginRight: 10 }}
@@ -211,7 +232,6 @@ const List: React.FC = () => {
               </Option>
             ))}
           </Select>
-
           <Select
             placeholder="Filter by specialization"
             style={{ width: 200, marginRight: 10 }}
@@ -226,6 +246,25 @@ const List: React.FC = () => {
             ))}
           </Select>
         </div>
+        <div className="searchAndSortContainer">
+          <Search
+            placeholder="Search by school name"
+            onSearch={handleSearch}
+            onChange={(e) => handleSearch(e.target.value)}
+            style={{ width: 200, marginRight: 10 }}
+          />
+          <Select
+            placeholder="Sort by"
+            style={{ width: 200 }}
+            onChange={handleSortChange}
+            allowClear
+          >
+            <Option value="name">Name (A-Z)</Option>
+            <Option value="minPointsAsc">Min Points (Ascending)</Option>
+            <Option value="minPointsDesc">Min Points (Descending)</Option>
+          </Select>
+        </div>
+
         <SchoolEntitiesTable data={filteredData}></SchoolEntitiesTable>
       </div>
     </>
