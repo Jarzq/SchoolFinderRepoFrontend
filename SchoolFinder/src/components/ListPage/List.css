@@ -1,0 +1,9 @@
+.mainListContainer {
+  color: white;
+  margin: 0 10vw 0 10vw;
+  padding-top: 15vh;
+}
+.titleListPage {
+  font-size: 42px;
+  text-align: center;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
 import "./SchoolEntity.css";
+import { Tag } from "antd";
 
 interface SchoolEntityProps {
   data: SchoolEntityType;
@@ -22,11 +23,24 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
 
       <p className="entityLabel">
         Przedmioty rozszerzone:
-        <p className="entityValue">{data.extendedSubjects.join(", ")}</p>
+        <span className="entityValue">
+          {data.extendedSubjects.map((subject) => (
+            <Tag color="#AA9CFF" key={subject}>
+              {subject.toUpperCase()}
+            </Tag>
+          ))}
+        </span>
       </p>
 
       <p className="entityLabel">
-        Języki:<p className="entityValue">{data.languages.join(", ")}</p>
+        Języki obce:
+        <span className="entityValue">
+          {data.languages.map((language) => (
+            <Tag color="#68B8DB" key={language}>
+              {language.toUpperCase()}
+            </Tag>
+          ))}
+        </span>
       </p>
 
       <p className="entityLabel">

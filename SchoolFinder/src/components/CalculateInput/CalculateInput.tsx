@@ -1,21 +1,49 @@
 import React, { useState } from "react";
 import { Form, Input } from "antd";
+import CalculateSinglePoints from "../../services/CalculateSinglePoints";
 
-const CalculateInput = ({ label, name, multiplyNumber }) => {
-  const handleInputChange = (e) => {
-    const newValue = e.target.value;
+interface CalculateInputProps {
+  label: string;
+  name: string;
+  multiplyNumber?: number;
+  isGrade: boolean;
+  minValue: number;
+  maxValue: number;
+}
 
-    const updatedPoints = newValue
-      ? Math.round(parseFloat(newValue) * multiplyNumber).toString()
-      : "";
-    const inputElement = document.getElementById(
-      `${name}Points`
-    ) as HTMLInputElement;
+const CalculateInput: React.FC<CalculateInputProps> = ({
+  label,
+  name,
+  multiplyNumber,
+  isGrade,
+  minValue,
+  maxValue,
+}: CalculateInputProps) => {
+  const [inputValue, setInputValue] = useState<number | undefined>(undefined);
 
-    if (inputElement) {
-      setTimeout(() => {
-        inputElement.value = updatedPoints;
-      });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseFloat(e.target.value);
+
+    if (!isNaN(newValue) && newValue >= minValue && newValue <= maxValue) {
+      setInputValue(newValue);
+
+      let updatedPoints: string = "";
+      updatedPoints = CalculateSinglePoints(
+        isGrade,
+        updatedPoints,
+        newValue.toString(),
+        multiplyNumber
+      );
+
+      const inputElement = document.getElementById(
+        `${name}Points`
+      ) as HTMLInputElement;
+
+      if (inputElement) {
+        setTimeout(() => {
+          inputElement.value = updatedPoints;
+        });
+      }
     }
   };
 
@@ -30,9 +58,13 @@ const CalculateInput = ({ label, name, multiplyNumber }) => {
     >
       <div className="formRowContainer">
         <Input
+          type="number"
           className="inputStyle"
           placeholder="Wynik [%]"
+          value={inputValue}
           onChange={handleInputChange}
+          min={minValue}
+          max={maxValue}
         />
         <Input
           id={`${name}Points`}

@@ -2,13 +2,29 @@ import React, { useState } from "react";
 import "./Calculator.css";
 import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
 import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
-import mockedSchoolEntities from "../../mocks/MockedSchoolEntities";
+import { mockedSchoolEntities } from "../../mocks/MockedSchoolTypes";
 import CalculateInput from "../CalculateInput/CalculateInput";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import {
+  MAX_KONKURSY_PUNKTY,
+  PUNKTY_ZA_SWIADECTWO_Z_WYROZNIENIEM,
+  PUNKTY_ZA_WOLONTARIAT,
+} from "../constants/calculateConsts";
 
 const Calculator: React.FC = () => {
   const [knowPoints, setKnowPoints] = useState(false);
+  const [isSwiadectwoChecked, setIsSwiadectwoChecked] = useState(false);
+  const [isWolontariatChecked, setIsWolontariatChecked] = useState(false);
   const onFinish = (values) => {
     console.log("Received values:", values);
+  };
+
+  const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
+    setIsSwiadectwoChecked(e.target.checked);
+  };
+
+  const handleWolontariatCheckboxChange = (e: CheckboxChangeEvent) => {
+    setIsWolontariatChecked(e.target.checked);
   };
 
   const mockedEntities = mockedSchoolEntities;
@@ -66,114 +82,68 @@ const Calculator: React.FC = () => {
               </div>
               <CalculateInput
                 label="język polski"
-                name="jezykPolski"
+                name="jezykPolskiOcena"
                 multiplyNumber={0.35}
+                isGrade={false}
+                minValue={0}
+                maxValue={100}
               />
-              <Form.Item
+              <CalculateInput
                 label="matematyka"
-                name="matematyka"
-                rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                labelCol={{ flex: "150px" }}
-                className="customFormItem"
-                labelAlign="left"
-              >
-                <div className="formRowContainer">
-                  <Input className="inputStyle" placeholder="Wynik [%]" />
-                  <Input
-                    className="inputStyle"
-                    placeholder="Uzyskane punkty"
-                    disabled
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item
-                label="język Obcy "
-                name="jezykObcy"
-                rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                labelCol={{ flex: "150px" }}
-                className="customFormItem"
-                labelAlign="left"
-              >
-                <div className="formRowContainer">
-                  <Input className="inputStyle" placeholder="Wynik [%]" />
-                  <Input
-                    className="inputStyle"
-                    placeholder="Uzyskane punkty"
-                    disabled
-                  />
-                </div>
-              </Form.Item>
+                name="matematykaOcena"
+                multiplyNumber={0.35}
+                isGrade={false}
+                minValue={0}
+                maxValue={100}
+              />
+              <CalculateInput
+                label="język obcy"
+                name="jezykObcyOcena"
+                multiplyNumber={0.3}
+                isGrade={false}
+                minValue={0}
+                maxValue={100}
+              />
               <div className="subSectionDivider">
                 <p>Wynik z egzaminu ósmoklasisty</p>
               </div>
-              <Form.Item
+              <CalculateInput
                 label="język polski"
-                name="jezykPolski"
-                rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                labelCol={{ flex: "150px" }}
-                className="customFormItem"
-                labelAlign="left"
-              >
-                <div className="formRowContainer">
-                  <Input className="inputStyle" placeholder="Wpisz ocenę" />
-                  <Input
-                    className="inputStyle"
-                    placeholder="Uzyskane punkty"
-                    disabled
-                  />
-                </div>
-              </Form.Item>
-              <Form.Item
+                name="jezykPolskiEgzamin"
+                isGrade={true}
+                minValue={1}
+                maxValue={6}
+              />
+              <CalculateInput
                 label="matematyka"
-                name="matematyka"
-                rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                labelCol={{ flex: "150px" }}
-                className="customFormItem"
-                labelAlign="left"
-              >
-                <div className="formRowContainer">
-                  <Input className="inputStyle" placeholder="Wpisz ocenę" />
-                  <Input
-                    className="inputStyle"
-                    placeholder="Uzyskane punkty"
-                    disabled
-                  />
-                </div>
-              </Form.Item>
+                name="matematykaEgzaimn"
+                isGrade={true}
+                minValue={1}
+                maxValue={6}
+              />
               <div className="extraSubjectContainer">
                 <Form.Item
                   name="extraSubject1"
                   rules={[
                     { required: true, message: "Proszę wybrać przedmiot" },
                   ]}
-                  className="customFormItem"
-                  labelAlign="left"
-                  style={{ marginRight: 20 }}
                 >
                   <Select
                     placeholder="Wybierz przedmiot"
-                    className="selectStyle"
+                    className="selectStyle mr-5"
                   >
                     <Option value="jezyk angielski">język angielski</Option>
                     <Option value="fizyka">fizyka</Option>
                   </Select>
                 </Form.Item>
 
-                <Form.Item
-                  name="extraSubject1Score"
-                  rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                  className="customFormItem"
-                  labelAlign="left"
-                >
-                  <div className="formRowContainer">
-                    <Input className="inputStyle" placeholder="Wpisz ocenę" />
-                    <Input
-                      className="inputStyle"
-                      placeholder="Uzyskane punkty"
-                      disabled
-                    />
-                  </div>
-                </Form.Item>
+                <CalculateInput
+                  label=""
+                  name="extraSubject1Egzamin"
+                  isGrade={true}
+                  minValue={1}
+                  maxValue={6}
+                />
               </div>
               <div className="extraSubjectContainer">
                 <Form.Item
@@ -181,35 +151,23 @@ const Calculator: React.FC = () => {
                   rules={[
                     { required: true, message: "Proszę wybrać przedmiot" },
                   ]}
-                  className="customFormItem"
-                  labelAlign="left"
-                  style={{ marginRight: 20 }}
                 >
                   <Select
                     placeholder="Wybierz przedmiot"
-                    className="selectStyle"
+                    className="selectStyle mr-5"
                   >
-                    {/* TODO: fetch data from backend */}
                     <Option value="jezyk angielski">język angielski</Option>
                     <Option value="fizyka">fizyka</Option>
                   </Select>
                 </Form.Item>
 
-                <Form.Item
-                  name="extraSubject1Score"
-                  rules={[{ required: true, message: "Proszę podaj wynik" }]}
-                  className="customFormItem"
-                  labelAlign="left"
-                >
-                  <div className="formRowContainer">
-                    <Input className="inputStyle" placeholder="Wpisz ocenę" />
-                    <Input
-                      className="inputStyle"
-                      placeholder="Uzyskane punkty"
-                      disabled
-                    />
-                  </div>
-                </Form.Item>
+                <CalculateInput
+                  label=""
+                  name="extraSubject2Egzamin"
+                  isGrade={true}
+                  minValue={2}
+                  maxValue={6}
+                />
               </div>
               <div className="subSectionDivider">
                 <p>dodatkowe aktywności</p>
@@ -219,32 +177,49 @@ const Calculator: React.FC = () => {
                 className="customFormItem"
               >
                 <div className="formRowContainer">
-                  <Checkbox className="text-white mb-4">
+                  <Checkbox
+                    className="text-white mb-4"
+                    onChange={handleSwiadectwoCheckboxChange}
+                  >
                     Świadectwo z wyróżnieniem
                   </Checkbox>
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
                     disabled
+                    value={
+                      isSwiadectwoChecked
+                        ? PUNKTY_ZA_SWIADECTWO_Z_WYROZNIENIEM
+                        : "0"
+                    }
                   />
                 </div>
               </Form.Item>
               <Form.Item name="wolontariat" className="customFormItem">
                 <div className="formRowContainer">
-                  <Checkbox className="text-white mb-4">Wolontariat</Checkbox>
+                  <Checkbox
+                    className="text-white mb-4"
+                    onChange={handleWolontariatCheckboxChange}
+                  >
+                    Wolontariat
+                  </Checkbox>
                   <Input
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
                     disabled
+                    value={isWolontariatChecked ? PUNKTY_ZA_WOLONTARIAT : "0"}
                   />
                 </div>
               </Form.Item>
-              <Form.Item name="wolontariat" className="customFormItem">
+              <Form.Item name="konkursy" className="customFormItem">
                 <div className="formRowContainer">
                   <p className="text-white mb-4 ">Punkty za konkursy</p>
                   <Input
+                    type="number"
                     className="inputStyle"
                     placeholder="Podaj liczbę punktów"
+                    min={0}
+                    max={MAX_KONKURSY_PUNKTY}
                   />
                 </div>
               </Form.Item>

@@ -1,0 +1,32 @@
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  background-color: #3f3f46;
+  border-bottom: 1px solid #5d5d66;
+  color: white;
+}
+.ant-table-wrapper .ant-table-tbody .ant-table-row > .ant-table-cell-row-hover {
+  background-color: #34343a;
+  color: white;
+}
+.ant-table-wrapper .ant-table-thead > tr > th {
+  background-color: #3f3f46;
+  color: white;
+  border-bottom: 1px solid #9898a0;
+}
+.tableStyles {
+}
+.ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > th:not(:last-child):not(.ant-table-selection-column):not(
+    .ant-table-row-expand-icon-cell
+  ):not([colspan])::before {
+  background-color: #9898a0;
+}
+.schoolNameStyle {
+  font-weight: 600;
+  color: white;
+}
+.ant-tag {
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
