@@ -7,6 +7,7 @@ import {
   mockedDistricts,
   mockedLanguages,
   mockedSpecialization,
+  mockedSubjects,
 } from "../../mocks/MockedSchoolTypes";
 import { SCHOOL_TYPE } from "../../interfaces/SchoolEntityType";
 
@@ -24,6 +25,9 @@ const List: React.FC = () => {
   const [selectedSpecialization, setSelectedSpecialization] = useState<
     string | null
   >(null);
+  const [selectedSubjects, setSelectedSubjectsType] = useState<string[] | null>(
+    null
+  );
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
@@ -32,7 +36,8 @@ const List: React.FC = () => {
       selectedDistrict,
       selectedType,
       selectedLanguages,
-      selectedSpecialization
+      selectedSpecialization,
+      selectedSubjects
     );
   };
 
@@ -43,7 +48,8 @@ const List: React.FC = () => {
       value,
       selectedType,
       selectedLanguages,
-      selectedSpecialization
+      selectedSpecialization,
+      selectedSubjects
     );
   };
 
@@ -54,7 +60,8 @@ const List: React.FC = () => {
       selectedDistrict,
       value,
       selectedLanguages,
-      selectedSpecialization
+      selectedSpecialization,
+      selectedSubjects
     );
   };
 
@@ -65,9 +72,11 @@ const List: React.FC = () => {
       selectedDistrict,
       selectedType,
       value,
-      selectedSpecialization
+      selectedSpecialization,
+      selectedSubjects
     );
   };
+
   const handleSpecializationFilter = (value: string | null) => {
     setSelectedSpecialization(value);
     filterData(
@@ -75,6 +84,19 @@ const List: React.FC = () => {
       selectedDistrict,
       selectedType,
       selectedLanguages,
+      value,
+      selectedSubjects
+    );
+  };
+
+  const handleSubjectsFilter = (value: string[] | null) => {
+    setSelectedSubjectsType(value);
+    filterData(
+      searchValue,
+      selectedDistrict,
+      selectedType,
+      selectedLanguages,
+      selectedSpecialization,
       value
     );
   };
@@ -84,7 +106,8 @@ const List: React.FC = () => {
     district: string | null,
     type: SCHOOL_TYPE | null,
     languages: string[] | null,
-    specialization: string | null
+    specialization: string | null,
+    subjects: string[] | null
   ) => {
     let filtered = mockedSchoolEntities.filter((entity) =>
       entity.schoolName.toLowerCase().includes(search.toLowerCase())
@@ -106,6 +129,11 @@ const List: React.FC = () => {
     if (specialization !== null) {
       filtered = filtered.filter(
         (entity) => entity.specialization === specialization
+      );
+    }
+    if (subjects !== null && subjects.length > 0) {
+      filtered = filtered.filter((entity) =>
+        subjects.every((subj) => entity.extendedSubjects.includes(subj))
       );
     }
 
@@ -165,6 +193,21 @@ const List: React.FC = () => {
             {mockedLanguages.map((language, index) => (
               <Option key={index} value={language}>
                 {language}
+              </Option>
+            ))}
+          </Select>
+
+          <Select
+            mode="multiple"
+            placeholder="Filter by subjects"
+            style={{ width: 200 }}
+            onChange={handleSubjectsFilter}
+            allowClear
+          >
+            <Option value={null}>Clear Selection</Option>
+            {mockedSubjects.map((subject, index) => (
+              <Option key={index} value={subject}>
+                {subject}
               </Option>
             ))}
           </Select>
