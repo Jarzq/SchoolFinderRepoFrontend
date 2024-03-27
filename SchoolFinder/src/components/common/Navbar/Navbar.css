@@ -1,9 +1,9 @@
 .mainNavbarContainer {
-  background-color: #343434;
+  background-color: #272629;
   font-size: 16px;
   color: white;
   width: 100vw;
-  border-bottom: 1px solid rgb(155, 155, 155);
+  border-bottom: 1px solid rgb(72, 72, 72);
   font-weight: 700;
   position: fixed;
   text-wrap: nowrap;
