@@ -8,7 +8,6 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: black;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,7 +29,7 @@ body {
   display: block;
   min-width: 320px;
   min-height: 100vh;
-  background-color: black;
+  background-color: hsl(247, 17%, 10%);
 }
 
 h1 {
@@ -55,6 +54,9 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+.bg-background {
+  background-color: hsl(247, 17%, 10%);
 }
 
 @media (prefers-color-scheme: light) {
