@@ -10,6 +10,8 @@ import {
   mockedSubjects,
 } from "../../mocks/MockedSchoolTypes";
 import { SCHOOL_TYPE } from "../../interfaces/SchoolEntityType";
+import { CloseCircleOutlined } from "@ant-design/icons";
+import { DownCircleTwoTone } from "@ant-design/icons";
 
 const { Search } = Input;
 const { Option } = Select;
@@ -153,9 +155,13 @@ const List: React.FC = () => {
     }
 
     if (sortOption !== null) {
-      if (sortOption === "name") {
+      if (sortOption === "nameAsc") {
         filtered = filtered.sort((a, b) =>
           a.schoolName.localeCompare(b.schoolName)
+        );
+      } else if (sortOption === "nameDesc") {
+        filtered = filtered.sort((a, b) =>
+          b.schoolName.localeCompare(a.schoolName)
         );
       } else if (sortOption === "minPointsAsc") {
         filtered = filtered.sort((a, b) => a.minPoints - b.minPoints);
@@ -173,12 +179,13 @@ const List: React.FC = () => {
         <p className="titleListPage">Lista oddziałów</p>
         <div className="filtersContainer">
           <Select
+            className="filterElement"
             placeholder="Filter by district"
             style={{ width: 200, marginRight: 10 }}
             onChange={handleDistrictFilter}
             allowClear
+            clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            <Option value={null}>Clear Selection</Option>
             {mockedDistricts.map((district, index) => (
               <Option key={index} value={district}>
                 {district}
@@ -187,12 +194,13 @@ const List: React.FC = () => {
           </Select>
 
           <Select
-            placeholder="Filter by type"
+            className="filterElement"
+            placeholder="Filtruj po typie szkoły"
             style={{ width: 200 }}
             onChange={handleTypeFilter}
             allowClear
+            clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            <Option value={null}>Clear Selection</Option>
             {Object.keys(SCHOOL_TYPE).map((type) => (
               <Option
                 key={type}
@@ -204,13 +212,14 @@ const List: React.FC = () => {
           </Select>
 
           <Select
+            className="filterElement"
             mode="multiple"
-            placeholder="Filter by languages"
+            placeholder="Filtruj po językach"
             style={{ width: 200 }}
             onChange={handleLanguagesFilter}
             allowClear
+            clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            <Option value={null}>Clear Selection</Option>
             {mockedLanguages.map((language, index) => (
               <Option key={index} value={language}>
                 {language}
@@ -219,13 +228,14 @@ const List: React.FC = () => {
           </Select>
 
           <Select
+            className="filterElement"
             mode="multiple"
-            placeholder="Filter by subjects"
+            placeholder="Filtruj po przedmiotach"
             style={{ width: 200 }}
             onChange={handleSubjectsFilter}
             allowClear
+            clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            <Option value={null}>Clear Selection</Option>
             {mockedSubjects.map((subject, index) => (
               <Option key={index} value={subject}>
                 {subject}
@@ -233,12 +243,13 @@ const List: React.FC = () => {
             ))}
           </Select>
           <Select
-            placeholder="Filter by specialization"
+            className="filterElement"
+            placeholder="Filtruj po specjalizacji"
             style={{ width: 200, marginRight: 10 }}
             onChange={handleSpecializationFilter}
             allowClear
+            clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            <Option value={null}>Clear Selection</Option>
             {mockedSpecialization.map((district, index) => (
               <Option key={index} value={district}>
                 {district}
@@ -247,21 +258,21 @@ const List: React.FC = () => {
           </Select>
         </div>
         <div className="searchAndSortContainer">
-          <Search
-            placeholder="Search by school name"
-            onSearch={handleSearch}
+          <Input
+            placeholder="Wyszukaj szkołę po nazwie"
             onChange={(e) => handleSearch(e.target.value)}
             style={{ width: 200, marginRight: 10 }}
           />
           <Select
-            placeholder="Sort by"
+            placeholder="Sortuj"
             style={{ width: 200 }}
             onChange={handleSortChange}
             allowClear
           >
-            <Option value="name">Name (A-Z)</Option>
-            <Option value="minPointsAsc">Min Points (Ascending)</Option>
-            <Option value="minPointsDesc">Min Points (Descending)</Option>
+            <Option value="nameAsc">Nazwa (A-Z)</Option>
+            <Option value="nameDesc">Nazwa (Z-A)</Option>
+            <Option value="minPointsAsc">Próg punktowy (Rosnąco)</Option>
+            <Option value="minPointsDesc">Próg punktowy (Malejąco)</Option>
           </Select>
         </div>
 

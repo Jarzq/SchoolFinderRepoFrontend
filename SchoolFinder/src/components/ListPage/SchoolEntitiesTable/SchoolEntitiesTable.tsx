@@ -33,7 +33,7 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
       ),
     },
     {
-      title: "jezyki obce",
+      title: "Języki obce",
       key: "languages",
       dataIndex: "languages",
       render: (languages: string[]) => (
@@ -49,7 +49,7 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
       ),
     },
     {
-      title: "Min punkty",
+      title: "Próg punktowy",
       dataIndex: "minPoints",
       key: "minPoints",
     },
