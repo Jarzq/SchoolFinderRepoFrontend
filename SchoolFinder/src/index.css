@@ -30,6 +30,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: hsl(247, 17%, 10%);
+  scroll-behavior: smooth;
 }
 
 h1 {

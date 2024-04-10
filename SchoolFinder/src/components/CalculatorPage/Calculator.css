@@ -78,10 +78,7 @@
 .extraSubjectContainer {
   display: flex;
 }
-.selectStyle {
-  width: 130px !important;
-  color: #71717a !important;
-}
+
 .ant-select-selection-placeholder {
   color: #71717a !important;
   font-size: 12px;
@@ -175,4 +172,9 @@
 }
 .ant-form-item .ant-form-item-explain-error {
   text-align: left;
+}
+
+.selectStyle {
+  width: 130px !important;
+  color: #71717a !important;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Calculator.css";
 import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
 import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
@@ -10,8 +10,11 @@ import {
   PUNKTY_ZA_SWIADECTWO_Z_WYROZNIENIEM,
   PUNKTY_ZA_WOLONTARIAT,
 } from "../constants/calculateConsts";
+import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
+import Subject from "../../interfaces/SubjectType";
 
 const Calculator: React.FC = () => {
+  const [subjects, setSubjects] = useState<Subject[]>([]);
   const [knowPoints, setKnowPoints] = useState(false);
   const [isSwiadectwoChecked, setIsSwiadectwoChecked] = useState(false);
   const [isWolontariatChecked, setIsWolontariatChecked] = useState(false);
@@ -19,6 +22,22 @@ const Calculator: React.FC = () => {
     console.log("Received values:", values);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const subjectsData = await SchoolApiService.getSubjects();
+        if (Array.isArray(subjectsData)) {
+          setSubjects(subjectsData);
+        } else {
+          console.error("Subjects data is not an array:", subjectsData);
+        }
+      } catch (error) {
+        console.error("Error fetching subjects:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
     setIsSwiadectwoChecked(e.target.checked);
   };
@@ -39,17 +58,6 @@ const Calculator: React.FC = () => {
     "Białołęka2",
     "Wola2",
     "Ta2r",
-    "Rembertów2",
-    "Wesoła",
-    "Białołęka",
-    "Wola",
-    "Tar",
-    "Rembertów",
-    "Wesoła2",
-    "Białołęka2",
-    "Wola2",
-    "Ta2r",
-    "Rembertów2",
   ];
 
   return (
@@ -78,7 +86,7 @@ const Calculator: React.FC = () => {
           {!knowPoints ? (
             <>
               <div className="subSectionDivider">
-                <p>Oceny na świadectwie</p>
+                <p>Wynik z egzaminu ósmoklasisty</p>
               </div>
               <CalculateInput
                 label="język polski"
@@ -105,7 +113,7 @@ const Calculator: React.FC = () => {
                 maxValue={100}
               />
               <div className="subSectionDivider">
-                <p>Wynik z egzaminu ósmoklasisty</p>
+                <p>Oceny na świadectwie</p>
               </div>
               <CalculateInput
                 label="język polski"
@@ -132,8 +140,11 @@ const Calculator: React.FC = () => {
                     placeholder="Wybierz przedmiot"
                     className="selectStyle mr-5"
                   >
-                    <Option value="jezyk angielski">język angielski</Option>
-                    <Option value="fizyka">fizyka</Option>
+                    {subjects.map((subject, index) => (
+                      <Select.Option key={index} value={subject.fullName}>
+                        {subject.fullName}
+                      </Select.Option>
+                    ))}
                   </Select>
                 </Form.Item>
 
@@ -156,8 +167,11 @@ const Calculator: React.FC = () => {
                     placeholder="Wybierz przedmiot"
                     className="selectStyle mr-5"
                   >
-                    <Option value="jezyk angielski">język angielski</Option>
-                    <Option value="fizyka">fizyka</Option>
+                    {subjects.map((subject, index) => (
+                      <Select.Option key={index} value={subject.fullName}>
+                        {subject.fullName}
+                      </Select.Option>
+                    ))}
                   </Select>
                 </Form.Item>
 

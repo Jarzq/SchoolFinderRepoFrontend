@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input } from "antd";
-import CalculateSinglePoints from "../../services/CalculateSinglePoints";
+import CalculateSinglePoints from "../../infrastructure/services/CalculateSinglePoints";
 
 interface CalculateInputProps {
   label: string;
