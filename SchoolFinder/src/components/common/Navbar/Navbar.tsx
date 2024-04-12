@@ -11,11 +11,11 @@ const Navbar: React.FC = () => {
           <div className="buttonNavbar">SchoolFinder </div>
         </Link>
         <div className="chooseActionContainer">
-          <Link to="/listPage">
-            <div className="mr-5 buttonNavbar">Lista szkół i oddziałów</div>
-          </Link>
           <Link to="/calculatorPage">
-            <div className="buttonNavbar">Dopasuj klasę</div>
+            <div className="mr-9  buttonNavbar">Dopasuj klasę</div>
+          </Link>
+          <Link to="/listPage">
+            <div className="buttonNavbar">Lista szkół i oddziałów</div>
           </Link>
         </div>
         <Button as={Link} color="primary" href="#" variant="flat">

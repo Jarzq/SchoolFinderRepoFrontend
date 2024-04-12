@@ -133,8 +133,13 @@
 .submitButton:hover {
   background-color: #8f7ff3 !important;
 }
+.ant-input-group.ant-input-group-compact {
+  display: flex;
+}
+.sliderContainer {
+  width: 100%;
+}
 .slider {
-  margin-top: 5vh;
   width: 200px;
 }
 .ant-slider-horizontal .ant-slider-rail {
@@ -173,7 +178,12 @@
 .ant-form-item .ant-form-item-explain-error {
   text-align: left;
 }
-
+.rangeInput {
+  width: 60px !important;
+}
+.rangeInputLeft {
+  margin-right: 10px !important;
+}
 .selectStyle {
   width: 130px !important;
   color: #71717a !important;

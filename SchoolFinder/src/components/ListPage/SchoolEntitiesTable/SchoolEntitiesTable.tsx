@@ -9,9 +9,17 @@ interface SchoolEntitiesTableProps {
 const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
   const columns = [
     {
+      title: "l.p",
+      dataIndex: "liczbaPorzadkowa",
+      key: "liczbaPorzadkowa",
+      render: (text: string, record: number, index: number) => {
+        return <span>{index + 1}</span>;
+      },
+    },
+    {
       title: "Nazwa",
-      dataIndex: "schoolName",
-      key: "schoolName",
+      dataIndex: "nazwaSzkoly",
+      key: "nazwaSzkoly",
       render: (text: string) => <p className="schoolNameStyle">{text}</p>,
     },
     {
@@ -50,13 +58,13 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
     },
     {
       title: "Próg punktowy",
-      dataIndex: "minPoints",
-      key: "minPoints",
+      dataIndex: "minimalnePunkty",
+      key: "minimalnePunkty",
     },
     {
       title: "Typ",
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "schoolType",
+      key: "schoolType",
     },
     {
       title: "Dzielnica",
@@ -65,7 +73,14 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
     },
   ];
 
-  return <Table className="tableStyles" columns={columns} dataSource={data} />;
+  return (
+    <Table
+      className="tableStyles"
+      columns={columns}
+      dataSource={data}
+      pagination={{ pageSize: 100 }}
+    />
+  );
 };
 
 export default SchoolEntitiesTable;

@@ -9,6 +9,7 @@ interface CalculateInputProps {
   isGrade: boolean;
   minValue: number;
   maxValue: number;
+  placeholder: string;
 }
 
 const CalculateInput: React.FC<CalculateInputProps> = ({
@@ -18,6 +19,7 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
   isGrade,
   minValue,
   maxValue,
+  placeholder,
 }: CalculateInputProps) => {
   const [inputValue, setInputValue] = useState<number | undefined>(undefined);
 
@@ -60,7 +62,7 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
         <Input
           type="number"
           className="inputStyle"
-          placeholder="Wynik [%]"
+          placeholder={placeholder}
           value={inputValue}
           onChange={handleInputChange}
           min={minValue}

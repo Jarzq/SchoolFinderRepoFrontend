@@ -1,12 +1,17 @@
 export interface SchoolEntityType {
-  schoolName: string;
-  schoolEntityName: string;
-  minPoints: number;
+  id: number;
+  dzielnica: string;
+  nazwaSzkoly: string;
+  symbolOddzialu: string | null;
+  nazwaOddzialu: string;
+  minimalnePunkty: number;
+  maksymalnePunkty: number;
+  schoolTypeEnum: number;
+  schoolType: string;
+  specializationId: number | null;
+  specialization: string | null;
   extendedSubjects: string[];
   languages: string[];
-  type: SCHOOL_TYPE;
-  specialization?: string;
-  dzielnica: string;
 }
 
 export enum SCHOOL_TYPE {

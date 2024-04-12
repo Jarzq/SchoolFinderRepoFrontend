@@ -1,25 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./List.css";
-import { Input, Select } from "antd";
+import { Input, Select, Slider, Spin } from "antd";
 import SchoolEntitiesTable from "./SchoolEntitiesTable/SchoolEntitiesTable";
+import { mockedSpecialization } from "../../mocks/MockedSchoolTypes";
 import {
-  mockedSchoolEntities,
-  mockedDistricts,
-  mockedLanguages,
-  mockedSpecialization,
-  mockedSubjects,
-} from "../../mocks/MockedSchoolTypes";
-import { SCHOOL_TYPE } from "../../interfaces/SchoolEntityType";
+  SCHOOL_TYPE,
+  SchoolEntityType,
+} from "../../interfaces/SchoolEntityType";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import { DownCircleTwoTone } from "@ant-design/icons";
+import Subject from "../../interfaces/SubjectType";
+import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
 
 const { Search } = Input;
 const { Option } = Select;
 
 const List: React.FC = () => {
-  const [filteredData, setFilteredData] = useState(mockedSchoolEntities);
+  const [schoolEntities, setSchoolEntities] = useState<SchoolEntityType[]>([]);
+  const [filteredData, setFilteredData] = useState(schoolEntities);
   const [searchValue, setSearchValue] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<string[] | null>(
+    null
+  );
   const [selectedType, setSelectedType] = useState<SCHOOL_TYPE | null>(null);
   const [selectedLanguages, setSelectedLanguagesType] = useState<
     string[] | null
@@ -31,6 +32,66 @@ const List: React.FC = () => {
     null
   );
   const [sortOption, setSortOption] = useState<string | null>(null);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [districts, setDistricts] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [rangeValue, setRangeValue] = useState<[number, number]>([10, 190]);
+
+  const subjectNames = subjects.map((subject) => subject.fullName);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const subjectsData = await SchoolApiService.getSubjects();
+        if (Array.isArray(subjectsData)) {
+          setSubjects(subjectsData);
+        } else {
+          console.error("Subjects data is not an array:", subjectsData);
+        }
+      } catch (error) {
+        console.error("Error fetching subjects:", error);
+      }
+
+      try {
+        const districtsData = await SchoolApiService.getDistricts();
+        if (Array.isArray(districtsData)) {
+          setDistricts(districtsData);
+        } else {
+          console.error("districts data is not an array:", districtsData);
+        }
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+
+      try {
+        const languagesData = await SchoolApiService.getLanguages();
+        if (Array.isArray(languagesData)) {
+          setLanguages(languagesData);
+        } else {
+          console.error("languages data is not an array:", languagesData);
+        }
+      } catch (error) {
+        console.error("Error fetching languages:", error);
+      }
+
+      try {
+        const schoolEntitiesData = await SchoolApiService.getSchoolEntities();
+        if (Array.isArray(schoolEntitiesData)) {
+          setSchoolEntities(schoolEntitiesData);
+        } else {
+          console.error(
+            "school entities data is not an array:",
+            schoolEntitiesData
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching school entities:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSearch = (value: string) => {
     setSearchValue(value);
@@ -40,11 +101,13 @@ const List: React.FC = () => {
       selectedType,
       selectedLanguages,
       selectedSpecialization,
-      selectedSubjects
+      selectedSubjects,
+      sortOption,
+      rangeValue
     );
   };
 
-  const handleDistrictFilter = (value: string | null) => {
+  const handleDistrictFilter = (value: string[] | null) => {
     setSelectedDistrict(value);
     filterData(
       searchValue,
@@ -52,7 +115,9 @@ const List: React.FC = () => {
       selectedType,
       selectedLanguages,
       selectedSpecialization,
-      selectedSubjects
+      selectedSubjects,
+      sortOption,
+      rangeValue
     );
   };
 
@@ -64,7 +129,9 @@ const List: React.FC = () => {
       value,
       selectedLanguages,
       selectedSpecialization,
-      selectedSubjects
+      selectedSubjects,
+      sortOption,
+      rangeValue
     );
   };
 
@@ -76,7 +143,9 @@ const List: React.FC = () => {
       selectedType,
       value,
       selectedSpecialization,
-      selectedSubjects
+      selectedSubjects,
+      sortOption,
+      rangeValue
     );
   };
 
@@ -88,7 +157,9 @@ const List: React.FC = () => {
       selectedType,
       selectedLanguages,
       value,
-      selectedSubjects
+      selectedSubjects,
+      sortOption,
+      rangeValue
     );
   };
 
@@ -100,7 +171,9 @@ const List: React.FC = () => {
       selectedType,
       selectedLanguages,
       selectedSpecialization,
-      value
+      value,
+      sortOption,
+      rangeValue
     );
   };
 
@@ -113,21 +186,66 @@ const List: React.FC = () => {
       selectedLanguages,
       selectedSpecialization,
       selectedSubjects,
+      value,
+      rangeValue
+    );
+  };
+
+  const handleSliderChange = (value: [number, number]) => {
+    if (value[0] <= value[1] && value[0] > 0 && value[1] < 1000) {
+      setRangeValue(value);
+    }
+    filterData(
+      searchValue,
+      selectedDistrict,
+      selectedType,
+      selectedLanguages,
+      selectedSpecialization,
+      selectedSubjects,
+      sortOption,
       value
     );
   };
 
+  const applyFilters = () => {
+    filterData(
+      searchValue,
+      selectedDistrict,
+      selectedType,
+      selectedLanguages,
+      selectedSpecialization,
+      selectedSubjects,
+      sortOption,
+      rangeValue
+    );
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [
+    schoolEntities,
+    searchValue,
+    selectedDistrict,
+    selectedType,
+    selectedLanguages,
+    selectedSpecialization,
+    selectedSubjects,
+    sortOption,
+    rangeValue,
+  ]);
+
   const filterData = (
     search: string,
-    district: string | null,
+    district: string[] | null,
     type: SCHOOL_TYPE | null,
     languages: string[] | null,
     specialization: string | null,
     subjects: string[] | null,
-    sortOption?: string | null
+    sortOption?: string | null,
+    rangeValue?: [number, number]
   ) => {
-    let filtered = mockedSchoolEntities.filter((entity) =>
-      entity.schoolName.toLowerCase().includes(search.toLowerCase())
+    let filtered = schoolEntities.filter((entity) =>
+      entity.nazwaSzkoly.toLowerCase().includes(search.toLowerCase())
     );
 
     if (languages !== null && languages !== undefined && languages.length > 0) {
@@ -135,12 +253,14 @@ const List: React.FC = () => {
         languages.every((lang) => entity.languages.includes(lang))
       );
     }
-    if (district !== null && district !== undefined) {
-      filtered = filtered.filter((entity) => entity.dzielnica === district);
+    if (district && district.length > 0) {
+      filtered = filtered.filter((entity) =>
+        district.some((dist) => entity.dzielnica.includes(dist))
+      );
     }
 
     if (type !== null && type !== undefined) {
-      filtered = filtered.filter((entity) => entity.type === type);
+      filtered = filtered.filter((entity) => entity.schoolType === type);
     }
 
     if (specialization !== null && specialization !== undefined) {
@@ -153,25 +273,50 @@ const List: React.FC = () => {
         subjects.every((subj) => entity.extendedSubjects.includes(subj))
       );
     }
+    if (rangeValue !== undefined) {
+      filtered = filtered.filter(
+        (entity) =>
+          entity.minimalnePunkty >= rangeValue[0] &&
+          entity.minimalnePunkty <= rangeValue[1]
+      );
+    }
 
     if (sortOption !== null) {
       if (sortOption === "nameAsc") {
         filtered = filtered.sort((a, b) =>
-          a.schoolName.localeCompare(b.schoolName)
+          a.nazwaSzkoly.localeCompare(b.nazwaSzkoly)
         );
       } else if (sortOption === "nameDesc") {
         filtered = filtered.sort((a, b) =>
-          b.schoolName.localeCompare(a.schoolName)
+          b.nazwaSzkoly.localeCompare(a.nazwaSzkoly)
         );
       } else if (sortOption === "minPointsAsc") {
-        filtered = filtered.sort((a, b) => a.minPoints - b.minPoints);
+        filtered = filtered.sort(
+          (a, b) => a.minimalnePunkty - b.minimalnePunkty
+        );
       } else if (sortOption === "minPointsDesc") {
-        filtered = filtered.sort((a, b) => b.minPoints - a.minPoints);
+        filtered = filtered.sort(
+          (a, b) => b.minimalnePunkty - a.minimalnePunkty
+        );
       }
     }
 
     setFilteredData(filtered);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch data...
+      } catch (error) {
+        console.error("Error fetching school entities:", error);
+      } finally {
+        setLoading(false); // Set loading state to false when data fetching is done
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -179,14 +324,15 @@ const List: React.FC = () => {
         <p className="titleListPage">Lista oddziałów</p>
         <div className="filtersContainer">
           <Select
+            mode="multiple"
             className="filterElement"
-            placeholder="Filter by district"
+            placeholder="Filtruj po dzielnicy"
             style={{ width: 200, marginRight: 10 }}
             onChange={handleDistrictFilter}
             allowClear
             clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            {mockedDistricts.map((district, index) => (
+            {districts.map((district, index) => (
               <Option key={index} value={district}>
                 {district}
               </Option>
@@ -220,7 +366,7 @@ const List: React.FC = () => {
             allowClear
             clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            {mockedLanguages.map((language, index) => (
+            {languages.map((language, index) => (
               <Option key={index} value={language}>
                 {language}
               </Option>
@@ -236,7 +382,7 @@ const List: React.FC = () => {
             allowClear
             clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            {mockedSubjects.map((subject, index) => (
+            {subjectNames.map((subject, index) => (
               <Option key={index} value={subject}>
                 {subject}
               </Option>
@@ -257,12 +403,39 @@ const List: React.FC = () => {
             ))}
           </Select>
         </div>
+        <div className="zakresProguTitle">Zakres progu punktowego</div>
         <div className="searchAndSortContainer">
           <Input
             placeholder="Wyszukaj szkołę po nazwie"
             onChange={(e) => handleSearch(e.target.value)}
             style={{ width: 200, marginRight: 10 }}
           />
+
+          <Input.Group compact>
+            <Input
+              className="rangeInput rangeInputLeft"
+              value={rangeValue[0]}
+              onChange={(e) =>
+                handleSliderChange([+e.target.value, rangeValue[1]])
+              }
+            />
+            <Slider
+              range
+              value={rangeValue}
+              min={0}
+              max={200}
+              onChange={handleSliderChange}
+              className="slider"
+            />
+            <Input
+              className="rangeInput ml-5"
+              value={rangeValue[1]}
+              onChange={(e) =>
+                handleSliderChange([rangeValue[0], +e.target.value])
+              }
+            />
+          </Input.Group>
+
           <Select
             placeholder="Sortuj"
             style={{ width: 200 }}
@@ -276,7 +449,11 @@ const List: React.FC = () => {
           </Select>
         </div>
 
-        <SchoolEntitiesTable data={filteredData}></SchoolEntitiesTable>
+        {loading ? (
+          <Spin size="large" />
+        ) : (
+          <SchoolEntitiesTable data={filteredData}></SchoolEntitiesTable>
+        )}
       </div>
     </>
   );

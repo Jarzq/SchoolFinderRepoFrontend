@@ -10,7 +10,7 @@
 .searchAndSortContainer {
   display: flex;
   justify-content: space-between;
-  margin: 1vh 1vw 1vh 1vw;
+  margin: 0vh 1vw 1vh 1vw;
 }
 .ant-input::placeholder {
   color: #71717a !important;
@@ -28,4 +28,8 @@
 }
 .filterElement {
   margin: 10px;
+}
+.zakresProguTitle {
+  font-size: 14px;
+  color: #71717a !important;
 }

@@ -15,12 +15,17 @@ import Subject from "../../interfaces/SubjectType";
 
 const Calculator: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [districts, setDistricts] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
   const [knowPoints, setKnowPoints] = useState(false);
   const [isSwiadectwoChecked, setIsSwiadectwoChecked] = useState(false);
   const [isWolontariatChecked, setIsWolontariatChecked] = useState(false);
   const onFinish = (values) => {
     console.log("Received values:", values);
   };
+  const [rangeValue, setRangeValue] = useState<[number, number]>([10, 190]);
+
+  const subjectNames = subjects.map((subject) => subject.fullName);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,10 +39,33 @@ const Calculator: React.FC = () => {
       } catch (error) {
         console.error("Error fetching subjects:", error);
       }
+
+      try {
+        const districtsData = await SchoolApiService.getDistricts();
+        if (Array.isArray(districtsData)) {
+          setDistricts(districtsData);
+        } else {
+          console.error("districts data is not an array:", districtsData);
+        }
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+
+      try {
+        const languagesData = await SchoolApiService.getLanguages();
+        if (Array.isArray(languagesData)) {
+          setLanguages(languagesData);
+        } else {
+          console.error("languages data is not an array:", languagesData);
+        }
+      } catch (error) {
+        console.error("Error fetching languages:", error);
+      }
     };
 
     fetchData();
   }, []);
+
   const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
     setIsSwiadectwoChecked(e.target.checked);
   };
@@ -46,19 +74,13 @@ const Calculator: React.FC = () => {
     setIsWolontariatChecked(e.target.checked);
   };
 
-  const mockedEntities = mockedSchoolEntities;
+  const handleSliderChange = (value: [number, number]) => {
+    if (value[0] <= value[1] && value[0] > 0 && value[1] < 1000) {
+      setRangeValue(value);
+    }
+  };
 
-  const options = [
-    "Wesoła",
-    "Białołęka",
-    "Wola",
-    "Tar",
-    "Rembertów",
-    "Wesoła2",
-    "Białołęka2",
-    "Wola2",
-    "Ta2r",
-  ];
+  const mockedEntities = mockedSchoolEntities;
 
   return (
     <>
@@ -89,6 +111,7 @@ const Calculator: React.FC = () => {
                 <p>Wynik z egzaminu ósmoklasisty</p>
               </div>
               <CalculateInput
+                placeholder="Wynik [%]"
                 label="język polski"
                 name="jezykPolskiOcena"
                 multiplyNumber={0.35}
@@ -97,6 +120,7 @@ const Calculator: React.FC = () => {
                 maxValue={100}
               />
               <CalculateInput
+                placeholder="Wynik [%]"
                 label="matematyka"
                 name="matematykaOcena"
                 multiplyNumber={0.35}
@@ -105,6 +129,7 @@ const Calculator: React.FC = () => {
                 maxValue={100}
               />
               <CalculateInput
+                placeholder="Wynik [%]"
                 label="język obcy"
                 name="jezykObcyOcena"
                 multiplyNumber={0.3}
@@ -116,6 +141,7 @@ const Calculator: React.FC = () => {
                 <p>Oceny na świadectwie</p>
               </div>
               <CalculateInput
+                placeholder="Ocena"
                 label="język polski"
                 name="jezykPolskiEgzamin"
                 isGrade={true}
@@ -123,6 +149,7 @@ const Calculator: React.FC = () => {
                 maxValue={6}
               />
               <CalculateInput
+                placeholder="Ocena"
                 label="matematyka"
                 name="matematykaEgzaimn"
                 isGrade={true}
@@ -149,6 +176,7 @@ const Calculator: React.FC = () => {
                 </Form.Item>
 
                 <CalculateInput
+                  placeholder="Ocena"
                   label=""
                   name="extraSubject1Egzamin"
                   isGrade={true}
@@ -176,6 +204,7 @@ const Calculator: React.FC = () => {
                 </Form.Item>
 
                 <CalculateInput
+                  placeholder="Ocena"
                   label=""
                   name="extraSubject2Egzamin"
                   isGrade={true}
@@ -268,7 +297,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="dzielnica" className="customFormItem">
-            <Checkbox.Group options={options} style={{ width: "100%" }} />
+            <Checkbox.Group options={districts} style={{ width: "100%" }} />
           </Form.Item>
 
           <div className="subSectionDivider">
@@ -299,7 +328,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="przedmiotRozszerzony" className="customFormItem">
-            <Checkbox.Group options={options} style={{ width: "100%" }} />
+            <Checkbox.Group options={subjectNames} style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
@@ -340,8 +369,8 @@ const Calculator: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item name="przedmiotRozszerzony" className="customFormItem">
-            <Checkbox.Group options={options} style={{ width: "100%" }} />
+          <Form.Item name="languages" className="customFormItem">
+            <Checkbox.Group options={languages} style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
@@ -381,15 +410,36 @@ const Calculator: React.FC = () => {
             Wybierz przedział minimalnej liczby punktów, która jest potrzebna,
             aby dostać się na dany profil
           </p>
-          <Form.Item>
-            <Slider
-              range
-              defaultValue={[20, 50]}
-              min={0}
-              max={200}
-              className="slider"
-            />
-          </Form.Item>
+
+          <div className="sliderContainer">
+            <Form.Item name="zakresProgu">
+              ws
+              <Input.Group compact>
+                <Input
+                  className="rangeInput rangeInputLeft"
+                  value={rangeValue[0]}
+                  onChange={(e) =>
+                    handleSliderChange([+e.target.value, rangeValue[1]])
+                  }
+                />
+                <Slider
+                  range
+                  value={rangeValue}
+                  min={0}
+                  max={200}
+                  onChange={handleSliderChange}
+                  className="slider"
+                />
+                <Input
+                  className="rangeInput ml-5"
+                  value={rangeValue[1]}
+                  onChange={(e) =>
+                    handleSliderChange([rangeValue[0], +e.target.value])
+                  }
+                />
+              </Input.Group>
+            </Form.Item>
+          </div>
           {/* ////////////////////////////submit button//////////////////////////// */}
           <Form.Item>
             <Button type="primary" htmlType="submit" className="submitButton">
