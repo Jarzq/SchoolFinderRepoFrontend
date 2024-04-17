@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input } from "antd";
 import CalculateSinglePoints from "../../infrastructure/services/CalculateSinglePoints";
 
@@ -22,30 +22,24 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
   placeholder,
 }: CalculateInputProps) => {
   const [inputValue, setInputValue] = useState<number | undefined>(undefined);
+  const [points, setPoints] = useState<string>("");
+
+  useEffect(() => {
+    if (!isNaN(inputValue) && inputValue !== undefined) {
+      const updatedPoints = CalculateSinglePoints(
+        isGrade,
+        "",
+        inputValue.toString(),
+        multiplyNumber
+      );
+      setPoints(updatedPoints);
+    }
+  }, [inputValue, isGrade, multiplyNumber]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value);
-
     if (!isNaN(newValue) && newValue >= minValue && newValue <= maxValue) {
       setInputValue(newValue);
-
-      let updatedPoints: string = "";
-      updatedPoints = CalculateSinglePoints(
-        isGrade,
-        updatedPoints,
-        newValue.toString(),
-        multiplyNumber
-      );
-
-      const inputElement = document.getElementById(
-        `${name}Points`
-      ) as HTMLInputElement;
-
-      if (inputElement) {
-        setTimeout(() => {
-          inputElement.value = updatedPoints;
-        });
-      }
     }
   };
 
@@ -69,9 +63,9 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
           max={maxValue}
         />
         <Input
-          id={`${name}Points`}
           className="inputStyle"
           placeholder="Uzyskane punkty"
+          value={points}
           disabled
         />
       </div>
