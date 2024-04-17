@@ -18,14 +18,52 @@ const Calculator: React.FC = () => {
   const [districts, setDistricts] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [knowPoints, setKnowPoints] = useState(false);
-  const [isSwiadectwoChecked, setIsSwiadectwoChecked] = useState(false);
-  const [isWolontariatChecked, setIsWolontariatChecked] = useState(false);
+  const [swiadectwoPoints, setSwiadectwoPoints] = useState<number>(0);
+  const [wolontariatPoints, setWolontariatPoints] = useState<number>(0);
   const onFinish = (values) => {
     console.log("Received values:", values);
   };
   const [rangeValue, setRangeValue] = useState<[number, number]>([10, 190]);
-
+  const [totalPoints, setTotalPoints] = useState<number>(0);
+  const [polishExamScore, setPolishExamScore] = useState<number>(0);
+  const [mathExamScore, setMathExamScore] = useState<number>(0);
+  const [languageExamScore, setLanguageExamScore] = useState<number>(0);
+  const [polishGradeScore, setPolishGradeScore] = useState<number>(0);
+  const [mathGradeScore, setMathGradeScore] = useState<number>(0);
+  const [extraSubject1GradeScore, setExtraSubject1GradeScore] =
+    useState<number>(0);
+  const [extraSubject2GradeScore, setExtraSubject2GradeScore] =
+    useState<number>(0);
+  const [konkursyPoints, setKonkursyPoints] = useState<number>(0);
   const subjectNames = subjects.map((subject) => subject.fullName);
+
+  useEffect(() => {
+    let calculatedTotalPoints = 0;
+
+    calculatedTotalPoints =
+      polishExamScore +
+      mathExamScore +
+      languageExamScore +
+      polishGradeScore +
+      mathGradeScore +
+      extraSubject1GradeScore +
+      extraSubject2GradeScore +
+      swiadectwoPoints +
+      wolontariatPoints +
+      konkursyPoints;
+    setTotalPoints(calculatedTotalPoints);
+  }, [
+    polishExamScore,
+    mathExamScore,
+    languageExamScore,
+    polishGradeScore,
+    mathGradeScore,
+    extraSubject1GradeScore,
+    extraSubject2GradeScore,
+    konkursyPoints,
+    wolontariatPoints,
+    swiadectwoPoints,
+  ]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,16 +105,27 @@ const Calculator: React.FC = () => {
   }, []);
 
   const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
-    setIsSwiadectwoChecked(e.target.checked);
+    setSwiadectwoPoints(
+      e.target.checked ? PUNKTY_ZA_SWIADECTWO_Z_WYROZNIENIEM : 0
+    );
   };
 
   const handleWolontariatCheckboxChange = (e: CheckboxChangeEvent) => {
-    setIsWolontariatChecked(e.target.checked);
+    setWolontariatPoints(e.target.checked ? PUNKTY_ZA_WOLONTARIAT : 0);
   };
 
   const handleSliderChange = (value: [number, number]) => {
     if (value[0] <= value[1] && value[0] > 0 && value[1] < 1000) {
       setRangeValue(value);
+    }
+  };
+
+  const handleKonkursyPointsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newValue = parseFloat(e.target.value);
+    if (!isNaN(newValue)) {
+      setKonkursyPoints(newValue);
     }
   };
 
@@ -118,6 +167,7 @@ const Calculator: React.FC = () => {
                 isGrade={false}
                 minValue={0}
                 maxValue={100}
+                onPointsChange={setPolishExamScore}
               />
               <CalculateInput
                 placeholder="Wynik [%]"
@@ -127,6 +177,7 @@ const Calculator: React.FC = () => {
                 isGrade={false}
                 minValue={0}
                 maxValue={100}
+                onPointsChange={setMathExamScore}
               />
               <CalculateInput
                 placeholder="Wynik [%]"
@@ -136,6 +187,7 @@ const Calculator: React.FC = () => {
                 isGrade={false}
                 minValue={0}
                 maxValue={100}
+                onPointsChange={setLanguageExamScore}
               />
               <div className="subSectionDivider">
                 <p>Oceny na świadectwie</p>
@@ -145,16 +197,18 @@ const Calculator: React.FC = () => {
                 label="język polski"
                 name="jezykPolskiEgzamin"
                 isGrade={true}
-                minValue={1}
+                minValue={2}
                 maxValue={6}
+                onPointsChange={setPolishGradeScore}
               />
               <CalculateInput
                 placeholder="Ocena"
                 label="matematyka"
                 name="matematykaEgzaimn"
                 isGrade={true}
-                minValue={1}
+                minValue={2}
                 maxValue={6}
+                onPointsChange={setMathGradeScore}
               />
               <div className="extraSubjectContainer">
                 <Form.Item
@@ -180,8 +234,9 @@ const Calculator: React.FC = () => {
                   label=""
                   name="extraSubject1Egzamin"
                   isGrade={true}
-                  minValue={1}
+                  minValue={2}
                   maxValue={6}
+                  onPointsChange={setExtraSubject1GradeScore}
                 />
               </div>
               <div className="extraSubjectContainer">
@@ -210,6 +265,7 @@ const Calculator: React.FC = () => {
                   isGrade={true}
                   minValue={2}
                   maxValue={6}
+                  onPointsChange={setExtraSubject2GradeScore}
                 />
               </div>
               <div className="subSectionDivider">
@@ -230,11 +286,7 @@ const Calculator: React.FC = () => {
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
                     disabled
-                    value={
-                      isSwiadectwoChecked
-                        ? PUNKTY_ZA_SWIADECTWO_Z_WYROZNIENIEM
-                        : "0"
-                    }
+                    value={swiadectwoPoints}
                   />
                 </div>
               </Form.Item>
@@ -250,7 +302,7 @@ const Calculator: React.FC = () => {
                     className="inputStyle"
                     placeholder="Uzyskane punkty"
                     disabled
-                    value={isWolontariatChecked ? PUNKTY_ZA_WOLONTARIAT : "0"}
+                    value={wolontariatPoints}
                   />
                 </div>
               </Form.Item>
@@ -258,6 +310,7 @@ const Calculator: React.FC = () => {
                 <div className="formRowContainer">
                   <p className="text-white mb-4 ">Punkty za konkursy</p>
                   <Input
+                    onChange={handleKonkursyPointsChange}
                     type="number"
                     className="inputStyle"
                     placeholder="Podaj liczbę punktów"
@@ -279,6 +332,8 @@ const Calculator: React.FC = () => {
             </Form.Item>
           )}
         </div>
+
+        <div>Total Points: {totalPoints}</div>
 
         <div className="sectionDivider">
           <h1>2. Dopasuj do swoich preferencji</h1>

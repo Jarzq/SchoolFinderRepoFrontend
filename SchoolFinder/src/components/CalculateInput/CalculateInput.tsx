@@ -10,6 +10,7 @@ interface CalculateInputProps {
   minValue: number;
   maxValue: number;
   placeholder: string;
+  onPointsChange: (points: number) => void; // Updated prop definition
 }
 
 const CalculateInput: React.FC<CalculateInputProps> = ({
@@ -20,6 +21,7 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
   minValue,
   maxValue,
   placeholder,
+  onPointsChange,
 }: CalculateInputProps) => {
   const [inputValue, setInputValue] = useState<number | undefined>(undefined);
   const [points, setPoints] = useState<string>("");
@@ -33,8 +35,10 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
         multiplyNumber
       );
       setPoints(updatedPoints);
+      const pointsAsNumber = parseFloat(updatedPoints); // Parse the string to a float
+      onPointsChange(pointsAsNumber); // Pass calculated points as a number to parent
     }
-  }, [inputValue, isGrade, multiplyNumber]);
+  }, [inputValue, isGrade, multiplyNumber, onPointsChange]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseFloat(e.target.value);
