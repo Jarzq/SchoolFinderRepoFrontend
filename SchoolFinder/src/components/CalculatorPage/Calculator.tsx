@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./Calculator.css";
-import { Button, Checkbox, Form, Input, Radio, Select, Slider } from "antd";
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Radio,
+  Select,
+  Slider,
+  Statistic,
+  StatisticProps,
+  Tag,
+} from "antd";
 import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
 import { mockedSchoolEntities } from "../../mocks/MockedSchoolTypes";
 import CalculateInput from "../CalculateInput/CalculateInput";
@@ -12,6 +23,7 @@ import {
 } from "../constants/calculateConsts";
 import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
 import Subject from "../../interfaces/SubjectType";
+import CountUp from "react-countup";
 
 const Calculator: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -35,23 +47,29 @@ const Calculator: React.FC = () => {
   const [extraSubject2GradeScore, setExtraSubject2GradeScore] =
     useState<number>(0);
   const [konkursyPoints, setKonkursyPoints] = useState<number>(0);
+  const [alreadyKnowPoints, setAlreadyKnowPoints] = useState<number>(0);
   const subjectNames = subjects.map((subject) => subject.fullName);
 
   useEffect(() => {
     let calculatedTotalPoints = 0;
 
-    calculatedTotalPoints =
-      polishExamScore +
-      mathExamScore +
-      languageExamScore +
-      polishGradeScore +
-      mathGradeScore +
-      extraSubject1GradeScore +
-      extraSubject2GradeScore +
-      swiadectwoPoints +
-      wolontariatPoints +
-      konkursyPoints;
-    setTotalPoints(calculatedTotalPoints);
+    if (alreadyKnowPoints) {
+      setTotalPoints(alreadyKnowPoints);
+      setAllPointsToZero();
+    } else {
+      calculatedTotalPoints =
+        polishExamScore +
+        mathExamScore +
+        languageExamScore +
+        polishGradeScore +
+        mathGradeScore +
+        extraSubject1GradeScore +
+        extraSubject2GradeScore +
+        swiadectwoPoints +
+        wolontariatPoints +
+        konkursyPoints;
+      setTotalPoints(calculatedTotalPoints);
+    }
   }, [
     polishExamScore,
     mathExamScore,
@@ -63,6 +81,7 @@ const Calculator: React.FC = () => {
     konkursyPoints,
     wolontariatPoints,
     swiadectwoPoints,
+    alreadyKnowPoints,
   ]);
 
   useEffect(() => {
@@ -120,6 +139,19 @@ const Calculator: React.FC = () => {
     }
   };
 
+  const setAllPointsToZero = () => {
+    setKonkursyPoints(0);
+    setExtraSubject2GradeScore(0);
+    setExtraSubject1GradeScore(0);
+    setPolishGradeScore(0);
+    setMathGradeScore(0);
+    setLanguageExamScore(0);
+    setPolishExamScore(0);
+    setMathExamScore(0);
+    setWolontariatPoints(0);
+    setSwiadectwoPoints(0);
+  };
+
   const handleKonkursyPointsChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -128,6 +160,28 @@ const Calculator: React.FC = () => {
       setKonkursyPoints(newValue);
     }
   };
+
+  const handleAlreadyKnowPointsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newValue = parseFloat(e.target.value);
+    if (!isNaN(newValue)) {
+      setAlreadyKnowPoints(newValue);
+    }
+  };
+
+  const handleAlreadyKnowCheckboxChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setKnowPoints(e.target.checked);
+    if (!e.target.checked) {
+      setAlreadyKnowPoints(0);
+    }
+  };
+
+  const formatter: StatisticProps["formatter"] = (value) => (
+    <CountUp className="sumNumber" end={value as number} separator="," />
+  );
 
   const mockedEntities = mockedSchoolEntities;
 
@@ -150,7 +204,8 @@ const Calculator: React.FC = () => {
         <div className="formSection">
           <Checkbox
             className="checkboxStyle"
-            onChange={(e) => setKnowPoints(e.target.checked)}
+            onChange={handleAlreadyKnowCheckboxChange}
+            checked={knowPoints}
           >
             Wiem już ile będę mieć punktów
           </Checkbox>
@@ -321,9 +376,10 @@ const Calculator: React.FC = () => {
               </Form.Item>
             </>
           ) : (
-            <Form.Item name="obtainedPoints" className="customFormItem">
+            <Form.Item name="alreadyKnowPoints" className="customFormItem">
               <div className="formRowContainer">
                 <Input
+                  onChange={handleAlreadyKnowPointsChange}
                   type="number"
                   className="inputStyle"
                   placeholder="Uzyskane punkty"
@@ -333,7 +389,12 @@ const Calculator: React.FC = () => {
           )}
         </div>
 
-        <div>Total Points: {totalPoints}</div>
+        <div className="sumPointsContainer">
+          <Tag className="TagPoints" color="blue">
+            Suma uzyskanych punktów
+            <Statistic value={totalPoints} formatter={formatter} />
+          </Tag>
+        </div>
 
         <div className="sectionDivider">
           <h1>2. Dopasuj do swoich preferencji</h1>

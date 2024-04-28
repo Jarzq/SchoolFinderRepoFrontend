@@ -1,3 +1,3 @@
 export const PUNKTY_ZA_WOLONTARIAT = 3;
 export const PUNKTY_ZA_SWIADECTWO_Z_WYROZNIENIEM = 7;
-export const MAX_KONKURSY_PUNKTY = "18";
+export const MAX_KONKURSY_PUNKTY = 18;
