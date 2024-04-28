@@ -23,7 +23,7 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
       render: (text: string) => <p className="schoolNameStyle">{text}</p>,
     },
     {
-      title: "Rozsz.Przemioty/Zawód",
+      title: "Rozsz.Przemioty / Specjalizacja",
       key: "extendedSubjects",
       dataIndex: "extendedSubjects",
       render: (extendedSubjects: string[], record: SchoolEntityType) => (

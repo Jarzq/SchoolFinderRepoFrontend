@@ -14,6 +14,10 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
       <p className="titleSchooEntitylName mb-6">{data.entityName}</p>
 
       <p className="entityLabel">
+        Typ szkoły:<p className="entityValue">{data.schoolType}</p>
+      </p>
+
+      <p className="entityLabel">
         Minimalne punkty:<p className="entityValue">{data.minPoints}</p>
       </p>
 
@@ -22,13 +26,19 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
       </p>
 
       <p className="entityLabel">
-        Przedmioty rozszerzone:
+        {data.extendedSubjects && data.extendedSubjects.length > 0
+          ? "przedmioty rozszerzone"
+          : "specjalizacja"}
         <span className="entityValue">
-          {data.extendedSubjects.map((subject) => (
-            <Tag color="#AA9CFF" key={subject}>
-              {subject.toUpperCase()}
-            </Tag>
-          ))}
+          {data.extendedSubjects && data.extendedSubjects.length > 0 ? (
+            data.extendedSubjects.map((subject) => (
+              <Tag color="#AA9CFF" key={subject}>
+                {subject.toUpperCase()}
+              </Tag>
+            ))
+          ) : (
+            <Tag color="#AA9CFF">{data.specialization?.toUpperCase()}</Tag>
+          )}
         </span>
       </p>
 

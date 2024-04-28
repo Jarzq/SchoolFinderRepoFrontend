@@ -20,7 +20,7 @@ const mockedSchoolEntities: SchoolEntityType[] = [
     schoolName: "X Liceum Ogólnokształcące im. Jana Kowala",
     entityName: "[O] hist-pol-mat (ang-niem)",
     minPoints: 150,
-    extendedSubjects: ["historia", "j.polski", "matematyka"],
+    extendedSubjects: [],
     languages: ["Język angielski", "j.niemiecki"],
     schoolType: SCHOOL_TYPE.Liceum,
     district: "Mokotów",
@@ -29,7 +29,7 @@ const mockedSchoolEntities: SchoolEntityType[] = [
     maxPoints: 190,
     schoolTypeEnum: 2,
     specializationId: null,
-    specialization: null,
+    specialization: "technik informatyk",
   },
 ];
 
