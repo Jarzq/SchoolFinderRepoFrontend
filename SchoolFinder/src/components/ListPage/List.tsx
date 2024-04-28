@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./List.css";
 import { Input, Select, Slider, Spin } from "antd";
 import SchoolEntitiesTable from "./SchoolEntitiesTable/SchoolEntitiesTable";
-import { mockedSpecialization } from "../../mocks/MockedSchoolTypes";
 import {
   SCHOOL_TYPE,
   SchoolEntityType,
@@ -34,6 +33,7 @@ const List: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [districts, setDistricts] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
+  const [specializations, setSpecialzations] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [rangeValue, setRangeValue] = useState<[number, number]>([10, 190]);
 
@@ -86,6 +86,20 @@ const List: React.FC = () => {
         }
       } catch (error) {
         console.error("Error fetching school entities:", error);
+      }
+
+      try {
+        const specializationsData = await SchoolApiService.getSpecializations();
+        if (Array.isArray(specializationsData)) {
+          setSpecialzations(specializationsData);
+        } else {
+          console.error(
+            "specialization data is not an array:",
+            specializationsData
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching specializations:", error);
       }
     };
 
@@ -390,9 +404,9 @@ const List: React.FC = () => {
             allowClear
             clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            {mockedSpecialization.map((district, index) => (
-              <Option key={index} value={district}>
-                {district}
+            {specializations.map((specialization, index) => (
+              <Option key={index} value={specialization}>
+                {specialization}
               </Option>
             ))}
           </Select>

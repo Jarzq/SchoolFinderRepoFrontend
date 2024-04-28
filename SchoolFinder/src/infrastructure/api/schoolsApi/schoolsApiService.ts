@@ -64,6 +64,21 @@ const SchoolApiService = {
       throw error;
     }
   },
+
+  getSpecializations: async (): Promise<string[]> => {
+    try {
+      const apiUrl =
+        import.meta.env.VITE_REACT_APP_API_URL || "https://localhost:44358";
+      const getSpecializationsUrl = `${apiUrl}/Specializations`;
+
+      const response = await axios.get<string[]>(getSpecializationsUrl);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching specializations:", error);
+      throw error;
+    }
+  },
 };
 
 export default SchoolApiService;

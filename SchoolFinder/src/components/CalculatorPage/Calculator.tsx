@@ -529,7 +529,6 @@ const Calculator: React.FC = () => {
 
           <div className="sliderContainer">
             <Form.Item name="zakresProgu">
-              ws
               <Input.Group compact>
                 <Input
                   className="rangeInput rangeInputLeft"
