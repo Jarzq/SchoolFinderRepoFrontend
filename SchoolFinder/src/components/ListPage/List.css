@@ -12,6 +12,9 @@
   justify-content: space-between;
   margin: 0vh 1vw 1vh 1vw;
 }
+.searchAndSortContainer > .ant-input-group.ant-input-group-compact {
+  display: block;
+}
 .ant-input::placeholder {
   color: #71717a !important;
 }
