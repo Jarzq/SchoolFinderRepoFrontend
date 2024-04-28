@@ -78,7 +78,7 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
       className="tableStyles"
       columns={columns}
       dataSource={data}
-      pagination={{ pageSize: 100 }}
+      pagination={{ pageSize: 100, showSizeChanger: false }}
     />
   );
 };
