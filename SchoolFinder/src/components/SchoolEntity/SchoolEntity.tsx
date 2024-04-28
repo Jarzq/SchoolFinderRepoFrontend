@@ -11,7 +11,7 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
   return (
     <div className="EntityContainer">
       <p className="titleSchoolName">{data.schoolName}</p>
-      <p className="titleSchooEntitylName mb-6">{data.schoolEntityName}</p>
+      <p className="titleSchooEntitylName mb-6">{data.entityName}</p>
 
       <p className="entityLabel">
         Minimalne punkty:<p className="entityValue">{data.minPoints}</p>
@@ -44,7 +44,7 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
       </p>
 
       <p className="entityLabel">
-        Dzielnica:<p className="entityValue">{data.dzielnica}</p>
+        Dzielnica:<p className="entityValue">{data.district}</p>
       </p>
     </div>
   );

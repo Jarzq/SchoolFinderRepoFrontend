@@ -287,7 +287,7 @@ const Calculator: React.FC = () => {
                 <CalculateInput
                   placeholder="Ocena"
                   label=""
-                  name="extraSubject1Egzamin"
+                  name="extraSubject1Ocena"
                   isGrade={true}
                   minValue={2}
                   maxValue={6}
@@ -316,7 +316,7 @@ const Calculator: React.FC = () => {
                 <CalculateInput
                   placeholder="Ocena"
                   label=""
-                  name="extraSubject2Egzamin"
+                  name="extraSubject2Ocena"
                   isGrade={true}
                   minValue={2}
                   maxValue={6}
@@ -404,7 +404,7 @@ const Calculator: React.FC = () => {
           <div className="subSectionDivider">
             <p>Dzielnica</p>
           </div>
-          <Form.Item name="dzielnicaDontCount" className="customFormItem">
+          <Form.Item name="districtDontCount" className="customFormItem">
             <div className="formRowContainer">
               <Checkbox className="text-white mb-4">
                 Nie bierz pod uwagę (każda dzielnica mi odpowiada)
@@ -412,7 +412,7 @@ const Calculator: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item name="dzielnica" className="customFormItem">
+          <Form.Item name="district" className="customFormItem">
             <Checkbox.Group options={districts} style={{ width: "100%" }} />
           </Form.Item>
 
@@ -420,7 +420,7 @@ const Calculator: React.FC = () => {
             <p>Typ szkoły</p>
           </div>
 
-          <Form.Item name="typSzkoly" className="customFormItem">
+          <Form.Item name="schoolType" className="customFormItem">
             <Radio.Group>
               <Radio value="liecum"> Liceum </Radio>
               <Radio value="technikum"> Technikum </Radio>
@@ -433,7 +433,7 @@ const Calculator: React.FC = () => {
           </div>
 
           <Form.Item
-            name="przedmiotyRozszerzoneDontCount"
+            name="extendedSubjectsDontCount"
             className="customFormItem"
           >
             <div className="formRowContainer">
@@ -443,12 +443,12 @@ const Calculator: React.FC = () => {
             </div>
           </Form.Item>
 
-          <Form.Item name="przedmiotRozszerzony" className="customFormItem">
+          <Form.Item name="extendedSubjects" className="customFormItem">
             <Checkbox.Group options={subjectNames} style={{ width: "100%" }} />
           </Form.Item>
 
           <Form.Item
-            name="ilePrzedmiotowRozszerzonych"
+            name="extendedSubjectsCount"
             labelCol={{ flex: "auto" }}
             wrapperCol={{ flex: "none" }}
             className="customFormItem"
@@ -475,7 +475,7 @@ const Calculator: React.FC = () => {
             <p>Języki obce</p>
           </div>
           <Form.Item
-            name="przedmiotyRozszerzoneDontCount"
+            name="extendedSubjectsDontCount"
             className="customFormItem"
           >
             <div className="formRowContainer">
@@ -490,7 +490,7 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            name="ilePrzedmiotowRozszerzonych"
+            name="languagesCount"
             labelCol={{ flex: "auto" }}
             wrapperCol={{ flex: "none" }}
             className="customFormItem"

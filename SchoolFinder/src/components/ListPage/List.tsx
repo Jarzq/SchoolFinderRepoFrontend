@@ -11,7 +11,6 @@ import { CloseCircleOutlined } from "@ant-design/icons";
 import Subject from "../../interfaces/SubjectType";
 import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
 
-const { Search } = Input;
 const { Option } = Select;
 
 const List: React.FC = () => {
@@ -245,7 +244,7 @@ const List: React.FC = () => {
     rangeValue?: [number, number]
   ) => {
     let filtered = schoolEntities.filter((entity) =>
-      entity.nazwaSzkoly.toLowerCase().includes(search.toLowerCase())
+      entity.schoolName.toLowerCase().includes(search.toLowerCase())
     );
 
     if (languages !== null && languages !== undefined && languages.length > 0) {
@@ -255,7 +254,7 @@ const List: React.FC = () => {
     }
     if (district && district.length > 0) {
       filtered = filtered.filter((entity) =>
-        district.some((dist) => entity.dzielnica.includes(dist))
+        district.some((dist) => entity.district.includes(dist))
       );
     }
 
@@ -276,28 +275,23 @@ const List: React.FC = () => {
     if (rangeValue !== undefined) {
       filtered = filtered.filter(
         (entity) =>
-          entity.minimalnePunkty >= rangeValue[0] &&
-          entity.minimalnePunkty <= rangeValue[1]
+          entity.minPoints >= rangeValue[0] && entity.minPoints <= rangeValue[1]
       );
     }
 
     if (sortOption !== null) {
       if (sortOption === "nameAsc") {
         filtered = filtered.sort((a, b) =>
-          a.nazwaSzkoly.localeCompare(b.nazwaSzkoly)
+          a.schoolName.localeCompare(b.schoolName)
         );
       } else if (sortOption === "nameDesc") {
         filtered = filtered.sort((a, b) =>
-          b.nazwaSzkoly.localeCompare(a.nazwaSzkoly)
+          b.schoolName.localeCompare(a.schoolName)
         );
       } else if (sortOption === "minPointsAsc") {
-        filtered = filtered.sort(
-          (a, b) => a.minimalnePunkty - b.minimalnePunkty
-        );
+        filtered = filtered.sort((a, b) => a.minPoints - b.minPoints);
       } else if (sortOption === "minPointsDesc") {
-        filtered = filtered.sort(
-          (a, b) => b.minimalnePunkty - a.minimalnePunkty
-        );
+        filtered = filtered.sort((a, b) => b.minPoints - a.minPoints);
       }
     }
 
@@ -311,7 +305,7 @@ const List: React.FC = () => {
       } catch (error) {
         console.error("Error fetching school entities:", error);
       } finally {
-        setLoading(false); // Set loading state to false when data fetching is done
+        setLoading(false);
       }
     };
 

@@ -1,11 +1,11 @@
 export interface SchoolEntityType {
   id: number;
-  dzielnica: string;
-  nazwaSzkoly: string;
-  symbolOddzialu: string | null;
-  nazwaOddzialu: string;
-  minimalnePunkty: number;
-  maksymalnePunkty: number;
+  district: string;
+  schoolName: string;
+  entitySymbol: string | null;
+  entityName: string;
+  minPoints: number;
+  maxPoints: number;
   schoolTypeEnum: number;
   schoolType: string;
   specializationId: number | null;

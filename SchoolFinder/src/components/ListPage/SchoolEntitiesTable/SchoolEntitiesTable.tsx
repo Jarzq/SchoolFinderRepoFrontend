@@ -18,8 +18,8 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
     },
     {
       title: "Nazwa",
-      dataIndex: "nazwaSzkoly",
-      key: "nazwaSzkoly",
+      dataIndex: "schoolName",
+      key: "schoolName",
       render: (text: string) => <p className="schoolNameStyle">{text}</p>,
     },
     {
@@ -58,8 +58,8 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
     },
     {
       title: "Próg punktowy",
-      dataIndex: "minimalnePunkty",
-      key: "minimalnePunkty",
+      dataIndex: "minPoints",
+      key: "minPoints",
     },
     {
       title: "Typ",
@@ -68,8 +68,8 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
     },
     {
       title: "Dzielnica",
-      dataIndex: "dzielnica",
-      key: "dzielnica",
+      dataIndex: "district",
+      key: "district",
     },
   ];
 
