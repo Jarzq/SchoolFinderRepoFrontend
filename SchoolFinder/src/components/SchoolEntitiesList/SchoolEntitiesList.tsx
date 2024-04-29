@@ -4,7 +4,7 @@ import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
 import "./SchoolEntitiesList.css";
 
 interface SchoolEntityListProps {
-  data: SchoolEntityType[];
+  data: SchoolEntityType[] | undefined;
   title: string;
 }
 
@@ -15,9 +15,8 @@ const SchoolEntitiesList: React.FC<SchoolEntityListProps> = ({
   return (
     <div className="schoolEntitiesContainer">
       <p className="text-4xl mb-7">{title}</p>
-      {data.map((entity, index) => (
-        <SchoolEntity key={index} data={entity} />
-      ))}
+      {data &&
+        data.map((entity, index) => <SchoolEntity key={index} data={entity} />)}
     </div>
   );
 };

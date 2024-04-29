@@ -13,7 +13,6 @@ import {
   Tag,
 } from "antd";
 import SchoolEntitiesList from "../SchoolEntitiesList/SchoolEntitiesList";
-import { mockedSchoolEntities } from "../../mocks/MockedSchoolTypes";
 import CalculateInput from "../CalculateInput/CalculateInput";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import {
@@ -24,6 +23,8 @@ import {
 import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
 import Subject from "../../interfaces/SubjectType";
 import CountUp from "react-countup";
+import { PrefferedSchoolsRequest } from "../../interfaces/PrefferedSchoolRequest";
+import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
 
 const Calculator: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -32,9 +33,6 @@ const Calculator: React.FC = () => {
   const [knowPoints, setKnowPoints] = useState(false);
   const [swiadectwoPoints, setSwiadectwoPoints] = useState<number>(0);
   const [wolontariatPoints, setWolontariatPoints] = useState<number>(0);
-  const onFinish = (values) => {
-    console.log("Received values:", values);
-  };
   const [rangeValue, setRangeValue] = useState<[number, number]>([10, 190]);
   const [totalPoints, setTotalPoints] = useState<number>(0);
   const [polishExamScore, setPolishExamScore] = useState<number>(0);
@@ -48,7 +46,44 @@ const Calculator: React.FC = () => {
     useState<number>(0);
   const [konkursyPoints, setKonkursyPoints] = useState<number>(0);
   const [alreadyKnowPoints, setAlreadyKnowPoints] = useState<number>(0);
+  const [prefferedSchoolEntities, setprefferedSchoolEntities] = useState<
+    SchoolEntityType[] | undefined
+  >();
   const subjectNames = subjects.map((subject) => subject.fullName);
+
+  const onFinish = async (values) => {
+    console.log("Received values:", values);
+
+    try {
+      const requestData: PrefferedSchoolsRequest = {
+        prefferedDzielnica: values.district,
+        acheivedPunkty: totalPoints,
+        rangeIncrease: 60,
+        rangeDecrease: 150,
+        prefferedSchoolType: "Liceum",
+        prefferedSpecialization: values.prefferedSpecialization,
+        prefferedExtendedSubjects: values.extendedSubjects,
+        numberMatchingSubjects: values.numberMatchingSubjects,
+        prefferedLanguages: values.languages,
+        numberMatchingLanguages: values.numberMatchingLanguages,
+      };
+
+      const schoolEntitiesData = await SchoolApiService.getPrefferedSchools(
+        requestData
+      );
+      if (Array.isArray(schoolEntitiesData)) {
+        setprefferedSchoolEntities(schoolEntitiesData);
+      } else {
+        //TODO: just display empty
+        console.error(
+          "school entities data is not an array:",
+          schoolEntitiesData
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching school entities:", error);
+    }
+  };
 
   useEffect(() => {
     let calculatedTotalPoints = 0;
@@ -182,8 +217,6 @@ const Calculator: React.FC = () => {
   const formatter: StatisticProps["formatter"] = (value) => (
     <CountUp className="sumNumber" end={value as number} separator="," />
   );
-
-  const mockedEntities = mockedSchoolEntities;
 
   return (
     <>
@@ -564,11 +597,11 @@ const Calculator: React.FC = () => {
         </div>
       </Form>
       <SchoolEntitiesList
-        data={mockedEntities}
+        data={prefferedSchoolEntities}
         title="Oddziały pasujące w 100% do twoich preferencji"
       ></SchoolEntitiesList>
       <SchoolEntitiesList
-        data={mockedEntities}
+        data={prefferedSchoolEntities}
         title="Podobne oddziały różniące się jednym kryterium"
       ></SchoolEntitiesList>
     </>

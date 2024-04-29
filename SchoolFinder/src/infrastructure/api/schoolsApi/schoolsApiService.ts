@@ -1,6 +1,7 @@
 import axios from "axios";
 import Subject from "../../../interfaces/SubjectType";
 import { SchoolEntityType } from "../../../interfaces/SchoolEntityType";
+import { PrefferedSchoolsRequest } from "../../../interfaces/PrefferedSchoolRequest";
 
 const SchoolApiService = {
   getSubjects: async (): Promise<Subject[]> => {
@@ -76,6 +77,26 @@ const SchoolApiService = {
       return response.data;
     } catch (error) {
       console.error("Error fetching specializations:", error);
+      throw error;
+    }
+  },
+
+  getPrefferedSchools: async (
+    requestData: PrefferedSchoolsRequest
+  ): Promise<SchoolEntityType[]> => {
+    try {
+      const apiUrl =
+        import.meta.env.VITE_REACT_APP_API_URL || "https://localhost:44358";
+      const getPrefferedSchoolsUrl = `${apiUrl}/PrefferedSchoolEntities`;
+
+      const response = await axios.post<SchoolEntityType[]>(
+        getPrefferedSchoolsUrl,
+        requestData
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching school entities:", error);
       throw error;
     }
   },
