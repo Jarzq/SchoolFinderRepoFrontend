@@ -54,11 +54,11 @@ const Calculator: React.FC = () => {
     useState<number>(0);
   const [konkursyPoints, setKonkursyPoints] = useState<number>(0);
   const [alreadyKnowPoints, setAlreadyKnowPoints] = useState<number>(0);
+  const [anyExctendedSubjectsCheckbox, setAnyExctendedSubjectsCheckbox] =
+    useState(false);
   const subjectNames = subjects.map((subject) => subject.fullName);
 
   const onFinish = async (values) => {
-    console.log("Received values:", values);
-
     try {
       const requestData: PrefferedSchoolsRequest = {
         prefferedDzielnica: values.district,
@@ -67,7 +67,9 @@ const Calculator: React.FC = () => {
         rangeDecrease: rangeValue[1],
         prefferedSchoolType: values.schoolType,
         prefferedSpecialization: values.prefferedSpecialization,
-        prefferedExtendedSubjects: values.extendedSubjects,
+        prefferedExtendedSubjects: anyExctendedSubjectsCheckbox
+          ? []
+          : values.extendedSubjects,
         numberMatchingSubjects: extendedSubjectsCount,
         prefferedLanguages: values.languages,
         numberMatchingLanguages: languagesCount,
@@ -156,6 +158,10 @@ const Calculator: React.FC = () => {
 
     fetchData();
   }, []);
+
+  const handleAnySubjectsCheckboxChange = (e: CheckboxChangeEvent) => {
+    setAnyExctendedSubjectsCheckbox(e.target.checked);
+  };
 
   const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
     setSwiadectwoPoints(
@@ -476,22 +482,22 @@ const Calculator: React.FC = () => {
             <p>Przedmioty rozszerzone</p>
           </div>
 
-          <Form.Item
-            name="extendedSubjectsDontCount"
-            className="customFormItem"
-          >
-            <div className="formRowContainer">
-              <Checkbox className="text-white mb-4">
-                Nie bierz pod uwagę (każdy przedmiot mi odpowiada)
-              </Checkbox>
-            </div>
-          </Form.Item>
+          <div className="formRowContainer">
+            <Checkbox
+              className="text-white mb-4"
+              onChange={handleAnySubjectsCheckboxChange}
+            >
+              Nie bierz pod uwagę (każdy przedmiot mi odpowiada)
+            </Checkbox>
+          </div>
 
           <Form.Item name="extendedSubjects" className="customFormItem">
-            <Checkbox.Group
-              options={["subjectNames"]}
-              style={{ width: "100%" }}
-            />
+            {!anyExctendedSubjectsCheckbox && (
+              <Checkbox.Group
+                options={subjectNames}
+                style={{ width: "100%" }}
+              />
+            )}
           </Form.Item>
 
           <Form.Item
