@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
     <div className="mainNavbarContainer">
       <div className="contentContainer">
         <Link to="/">
-          <div className="buttonNavbar">SchoolFinder </div>
+          <div className="buttonNavbar mr-2">SchoolFinder </div>
         </Link>
         <div className="chooseActionContainer">
           <Link to="/calculatorPage">

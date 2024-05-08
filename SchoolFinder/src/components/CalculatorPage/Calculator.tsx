@@ -21,13 +21,12 @@ import {
   PUNKTY_ZA_WOLONTARIAT,
 } from "../constants/calculateConsts";
 import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
-import Subject from "../../interfaces/SubjectType";
 import CountUp from "react-countup";
 import { PrefferedSchoolsRequest } from "../../interfaces/PrefferedSchool";
 import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
 
 const Calculator: React.FC = () => {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [subjects, setSubjects] = useState<string[]>([]);
   const [exactPrefferedSchools, setExactPrefferedSchools] = useState<
     SchoolEntityType[] | undefined
   >();
@@ -58,7 +57,6 @@ const Calculator: React.FC = () => {
     useState(false);
   const [anyDistrictCheckbox, setAnyDistrictCheckbox] = useState(false);
   const [anyLanguageCheckbox, setAnyLanguageCheckbox] = useState(false);
-  const subjectNames = subjects.map((subject) => subject.fullName);
 
   const onFinish = async (values) => {
     try {
@@ -336,9 +334,9 @@ const Calculator: React.FC = () => {
                     placeholder="Wybierz przedmiot"
                     className="selectStyle mr-5"
                   >
-                    {subjects.map((subject, index) => (
-                      <Select.Option key={index} value={subject.fullName}>
-                        {subject.fullName}
+                    {subjects.map((subject) => (
+                      <Select.Option key={subject} value={subject}>
+                        {subject}
                       </Select.Option>
                     ))}
                   </Select>
@@ -365,9 +363,9 @@ const Calculator: React.FC = () => {
                     placeholder="Wybierz przedmiot"
                     className="selectStyle mr-5"
                   >
-                    {subjects.map((subject, index) => (
-                      <Select.Option key={index} value={subject.fullName}>
-                        {subject.fullName}
+                    {subjects.map((subject) => (
+                      <Select.Option key={subject} value={subject}>
+                        {subject}
                       </Select.Option>
                     ))}
                   </Select>
@@ -508,10 +506,7 @@ const Calculator: React.FC = () => {
           {!anyExctendedSubjectsCheckbox && (
             <>
               <Form.Item name="extendedSubjects" className="customFormItem">
-                <Checkbox.Group
-                  options={subjectNames}
-                  style={{ width: "100%" }}
-                />
+                <Checkbox.Group options={subjects} style={{ width: "100%" }} />
               </Form.Item>
               <Form.Item
                 name="extendedSubjectsCount"

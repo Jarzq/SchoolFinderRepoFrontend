@@ -40,11 +40,12 @@ const Main: React.FC = () => {
               <br /> jak tylko zechcesz
             </p>
             <p className="descriptionListSection">
-              Zaczniemy od wyliczenia Twoich punktów. Następnie wybierzesz
-              preferowane kryteria, takie jak lokalizacja, typ oddziału,
-              rozszerzone przedmioty i wiele innych. Nasz algorytm odnajdzie i
-              przedstawi Ci szkoły oraz oddziały, które doskonale spełniają
-              Twoje oczekiwania!
+              Przetestuj zaawansowaną wyszukiwarkę oddziałów, która pozwala na
+              sortowanie, filtrowanie na tyle sposobów na ile jesteś w stanie
+              sobie wyobrazić. Chcesz posortować według najniższego progu licea
+              na Mokotowie z rozszerzoną geografią, z językiem hiszpańskim z
+              przedziałem progu punktowego między 130 a 140? Nie ma sprawy,
+              możesz to zrobić właśnie tutaj!
             </p>
           </div>
         </div>
