@@ -14,9 +14,14 @@ const SchoolEntitiesList: React.FC<SchoolEntityListProps> = ({
 }) => {
   return (
     <div className="schoolEntitiesContainer">
-      <p className="text-4xl mb-7">{title}</p>
-      {data &&
-        data.map((entity, index) => <SchoolEntity key={index} data={entity} />)}
+      {data && (
+        <>
+          <p className="text-4xl mb-7">{title}</p>
+          {data.map((entity, index) => (
+            <SchoolEntity key={index} data={entity} />
+          ))}
+        </>
+      )}
     </div>
   );
 };

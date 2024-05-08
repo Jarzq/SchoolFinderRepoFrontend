@@ -1,3 +1,5 @@
+import { SchoolEntityType } from "./SchoolEntityType";
+
 export interface PrefferedSchoolsRequest {
   prefferedDzielnica: string[];
   acheivedPunkty: number;
@@ -9,4 +11,9 @@ export interface PrefferedSchoolsRequest {
   numberMatchingSubjects: number;
   prefferedLanguages: string[];
   numberMatchingLanguages: number;
+}
+
+export interface PrefferedSchoolsResponse {
+  exactPrefferedSchools: SchoolEntityType[];
+  notExactPrefferedSchools: SchoolEntityType[];
 }

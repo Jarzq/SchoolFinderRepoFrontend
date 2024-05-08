@@ -23,11 +23,17 @@ import {
 import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
 import Subject from "../../interfaces/SubjectType";
 import CountUp from "react-countup";
-import { PrefferedSchoolsRequest } from "../../interfaces/PrefferedSchoolRequest";
+import { PrefferedSchoolsRequest } from "../../interfaces/PrefferedSchool";
 import { SchoolEntityType } from "../../interfaces/SchoolEntityType";
 
 const Calculator: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [exactPrefferedSchools, setExactPrefferedSchools] = useState<
+    SchoolEntityType[] | undefined
+  >();
+  const [notExactPrefferedSchools, setNotExactPrefferedSchools] = useState<
+    SchoolEntityType[] | undefined
+  >();
   const [districts, setDistricts] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [knowPoints, setKnowPoints] = useState(false);
@@ -40,15 +46,14 @@ const Calculator: React.FC = () => {
   const [languageExamScore, setLanguageExamScore] = useState<number>(0);
   const [polishGradeScore, setPolishGradeScore] = useState<number>(0);
   const [mathGradeScore, setMathGradeScore] = useState<number>(0);
+  const [extendedSubjectsCount, setExtendedSubjectsCount] = useState<number>(0);
+  const [languagesCount, setLanguagesCount] = useState<number>(0);
   const [extraSubject1GradeScore, setExtraSubject1GradeScore] =
     useState<number>(0);
   const [extraSubject2GradeScore, setExtraSubject2GradeScore] =
     useState<number>(0);
   const [konkursyPoints, setKonkursyPoints] = useState<number>(0);
   const [alreadyKnowPoints, setAlreadyKnowPoints] = useState<number>(0);
-  const [prefferedSchoolEntities, setprefferedSchoolEntities] = useState<
-    SchoolEntityType[] | undefined
-  >();
   const subjectNames = subjects.map((subject) => subject.fullName);
 
   const onFinish = async (values) => {
@@ -58,28 +63,22 @@ const Calculator: React.FC = () => {
       const requestData: PrefferedSchoolsRequest = {
         prefferedDzielnica: values.district,
         acheivedPunkty: totalPoints,
-        rangeIncrease: 60,
-        rangeDecrease: 150,
-        prefferedSchoolType: "Liceum",
+        rangeIncrease: rangeValue[0],
+        rangeDecrease: rangeValue[1],
+        prefferedSchoolType: values.schoolType,
         prefferedSpecialization: values.prefferedSpecialization,
         prefferedExtendedSubjects: values.extendedSubjects,
-        numberMatchingSubjects: values.numberMatchingSubjects,
+        numberMatchingSubjects: extendedSubjectsCount,
         prefferedLanguages: values.languages,
-        numberMatchingLanguages: values.numberMatchingLanguages,
+        numberMatchingLanguages: languagesCount,
       };
 
       const schoolEntitiesData = await SchoolApiService.getPrefferedSchools(
         requestData
       );
-      if (Array.isArray(schoolEntitiesData)) {
-        setprefferedSchoolEntities(schoolEntitiesData);
-      } else {
-        //TODO: just display empty
-        console.error(
-          "school entities data is not an array:",
-          schoolEntitiesData
-        );
-      }
+
+      setExactPrefferedSchools(schoolEntitiesData.exactPrefferedSchools);
+      setNotExactPrefferedSchools(schoolEntitiesData.notExactPrefferedSchools);
     } catch (error) {
       console.error("Error fetching school entities:", error);
     }
@@ -217,6 +216,18 @@ const Calculator: React.FC = () => {
   const formatter: StatisticProps["formatter"] = (value) => (
     <CountUp className="sumNumber" end={value as number} separator="," />
   );
+
+  const handleExtendedSubjectsCountChange = (value: string) => {
+    setExtendedSubjectsCount(parseInt(value));
+  };
+
+  const handleLanguagesCountChange = (value: string) => {
+    setLanguagesCount(parseInt(value));
+  };
+
+  useEffect(() => {
+    // Your effect code here
+  }, [exactPrefferedSchools, notExactPrefferedSchools]);
 
   return (
     <>
@@ -455,9 +466,9 @@ const Calculator: React.FC = () => {
 
           <Form.Item name="schoolType" className="customFormItem">
             <Radio.Group>
-              <Radio value="liecum"> Liceum </Radio>
-              <Radio value="technikum"> Technikum </Radio>
-              <Radio value="szkolaBranzowa"> Szkoła branżowa </Radio>
+              <Radio value="Liceum"> Liceum </Radio>
+              <Radio value="Technikum"> Technikum </Radio>
+              <Radio value="SzkolaBranzowa"> Szkoła branżowa </Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -477,7 +488,10 @@ const Calculator: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="extendedSubjects" className="customFormItem">
-            <Checkbox.Group options={subjectNames} style={{ width: "100%" }} />
+            <Checkbox.Group
+              options={["subjectNames"]}
+              style={{ width: "100%" }}
+            />
           </Form.Item>
 
           <Form.Item
@@ -488,7 +502,14 @@ const Calculator: React.FC = () => {
             labelAlign="left"
           >
             <div className="formRowContainer">
-              <Input className="inputNumber" placeholder="1" type="number" />
+              <Input
+                className="inputNumber"
+                placeholder="1"
+                type="number"
+                onChange={(e) =>
+                  handleExtendedSubjectsCountChange(e.target.value)
+                }
+              />
               <div>Ile z wybranych przedmiotów musi pasować?</div>
             </div>
             <p className="description">
@@ -536,6 +557,7 @@ const Calculator: React.FC = () => {
                 className="inputNumber"
                 placeholder="1"
                 type="number"
+                onChange={(e) => handleLanguagesCountChange(e.target.value)}
               />
               <div>Ile z wybranych języków musi pasować?</div>
             </div>
@@ -597,11 +619,11 @@ const Calculator: React.FC = () => {
         </div>
       </Form>
       <SchoolEntitiesList
-        data={prefferedSchoolEntities}
+        data={exactPrefferedSchools}
         title="Oddziały pasujące w 100% do twoich preferencji"
       ></SchoolEntitiesList>
       <SchoolEntitiesList
-        data={prefferedSchoolEntities}
+        data={notExactPrefferedSchools}
         title="Podobne oddziały różniące się jednym kryterium"
       ></SchoolEntitiesList>
     </>

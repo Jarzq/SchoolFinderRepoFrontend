@@ -1,7 +1,10 @@
 import axios from "axios";
 import Subject from "../../../interfaces/SubjectType";
 import { SchoolEntityType } from "../../../interfaces/SchoolEntityType";
-import { PrefferedSchoolsRequest } from "../../../interfaces/PrefferedSchoolRequest";
+import {
+  PrefferedSchoolsRequest,
+  PrefferedSchoolsResponse,
+} from "../../../interfaces/PrefferedSchool";
 
 const SchoolApiService = {
   getSubjects: async (): Promise<Subject[]> => {
@@ -83,13 +86,13 @@ const SchoolApiService = {
 
   getPrefferedSchools: async (
     requestData: PrefferedSchoolsRequest
-  ): Promise<SchoolEntityType[]> => {
+  ): Promise<PrefferedSchoolsResponse> => {
     try {
       const apiUrl =
         import.meta.env.VITE_REACT_APP_API_URL || "https://localhost:44358";
       const getPrefferedSchoolsUrl = `${apiUrl}/PrefferedSchoolEntities`;
 
-      const response = await axios.post<SchoolEntityType[]>(
+      const response = await axios.post<PrefferedSchoolsResponse>(
         getPrefferedSchoolsUrl,
         requestData
       );
