@@ -56,22 +56,24 @@ const Calculator: React.FC = () => {
   const [alreadyKnowPoints, setAlreadyKnowPoints] = useState<number>(0);
   const [anyExctendedSubjectsCheckbox, setAnyExctendedSubjectsCheckbox] =
     useState(false);
+  const [anyDistrictCheckbox, setAnyDistrictCheckbox] = useState(false);
+  const [anyLanguageCheckbox, setAnyLanguageCheckbox] = useState(false);
   const subjectNames = subjects.map((subject) => subject.fullName);
 
   const onFinish = async (values) => {
     try {
       const requestData: PrefferedSchoolsRequest = {
-        prefferedDzielnica: values.district,
+        prefferedDzielnica: anyDistrictCheckbox ? null : values.district,
         acheivedPunkty: totalPoints,
         rangeIncrease: rangeValue[0],
         rangeDecrease: rangeValue[1],
         prefferedSchoolType: values.schoolType,
         prefferedSpecialization: values.prefferedSpecialization,
         prefferedExtendedSubjects: anyExctendedSubjectsCheckbox
-          ? []
+          ? null
           : values.extendedSubjects,
         numberMatchingSubjects: extendedSubjectsCount,
-        prefferedLanguages: values.languages,
+        prefferedLanguages: anyLanguageCheckbox ? null : values.languages,
         numberMatchingLanguages: languagesCount,
       };
 
@@ -161,6 +163,14 @@ const Calculator: React.FC = () => {
 
   const handleAnySubjectsCheckboxChange = (e: CheckboxChangeEvent) => {
     setAnyExctendedSubjectsCheckbox(e.target.checked);
+  };
+
+  const handleAnyDistrictCheckboxChange = (e: CheckboxChangeEvent) => {
+    setAnyDistrictCheckbox(e.target.checked);
+  };
+
+  const handleAnyLanguageCheckboxChange = (e: CheckboxChangeEvent) => {
+    setAnyLanguageCheckbox(e.target.checked);
   };
 
   const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
@@ -454,17 +464,21 @@ const Calculator: React.FC = () => {
           <div className="subSectionDivider">
             <p>Dzielnica</p>
           </div>
-          <Form.Item name="districtDontCount" className="customFormItem">
-            <div className="formRowContainer">
-              <Checkbox className="text-white mb-4">
-                Nie bierz pod uwagę (każda dzielnica mi odpowiada)
-              </Checkbox>
-            </div>
-          </Form.Item>
 
-          <Form.Item name="district" className="customFormItem">
-            <Checkbox.Group options={districts} style={{ width: "100%" }} />
-          </Form.Item>
+          <div className="formRowContainer mb-5">
+            <Checkbox
+              className="text-white mb-4"
+              onChange={handleAnyDistrictCheckboxChange}
+            >
+              Nie bierz pod uwagę (każda dzielnica mi odpowiada)
+            </Checkbox>
+          </div>
+
+          {!anyDistrictCheckbox && (
+            <Form.Item name="district" className="customFormItem">
+              <Checkbox.Group options={districts} style={{ width: "100%" }} />
+            </Form.Item>
+          )}
 
           <div className="subSectionDivider">
             <p>Typ szkoły</p>
@@ -482,7 +496,7 @@ const Calculator: React.FC = () => {
             <p>Przedmioty rozszerzone</p>
           </div>
 
-          <div className="formRowContainer">
+          <div className="formRowContainer mb-5">
             <Checkbox
               className="text-white mb-4"
               onChange={handleAnySubjectsCheckboxChange}
@@ -491,63 +505,66 @@ const Calculator: React.FC = () => {
             </Checkbox>
           </div>
 
-          <Form.Item name="extendedSubjects" className="customFormItem">
-            {!anyExctendedSubjectsCheckbox && (
-              <Checkbox.Group
-                options={subjectNames}
-                style={{ width: "100%" }}
-              />
-            )}
-          </Form.Item>
-
-          <Form.Item
-            name="extendedSubjectsCount"
-            labelCol={{ flex: "auto" }}
-            wrapperCol={{ flex: "none" }}
-            className="customFormItem"
-            labelAlign="left"
-          >
-            <div className="formRowContainer">
-              <Input
-                className="inputNumber"
-                placeholder="1"
-                type="number"
-                onChange={(e) =>
-                  handleExtendedSubjectsCountChange(e.target.value)
-                }
-              />
-              <div>Ile z wybranych przedmiotów musi pasować?</div>
-            </div>
-            <p className="description">
-              *Jeśli nie jesteś pewien, które dokładnie przedmioty chcesz mieć
-              rozszerzone, oraz jesteś otwarty na możliwość, że nie wszystkie
-              wybrane przedmioty będą dostępne w wybranej szkole, wybierz
-              mniejszą liczbę. Przykład: Zaznaczyłeś chemię, biologię i
-              angielski. Jeśli tylko te trzy przedmioty Cię interesują, zaznacz
-              "3". Wtedy wyświetlimy Ci propozycje profili tylko z tymi
-              przedmiotami. Jeśli chcesz również zobaczyć więcej wyników z
-              dopasowanymi tylko dwoma wybranymi przedmiotami, np. biologia,
-              chemia, geografia - wybierz "2", itd."
-            </p>
-          </Form.Item>
+          {!anyExctendedSubjectsCheckbox && (
+            <>
+              <Form.Item name="extendedSubjects" className="customFormItem">
+                <Checkbox.Group
+                  options={subjectNames}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+              <Form.Item
+                name="extendedSubjectsCount"
+                labelCol={{ flex: "auto" }}
+                wrapperCol={{ flex: "none" }}
+                className="customFormItem"
+                labelAlign="left"
+              >
+                <div className="formRowContainer">
+                  <Input
+                    className="inputNumber"
+                    placeholder="1"
+                    type="number"
+                    onChange={(e) =>
+                      handleExtendedSubjectsCountChange(e.target.value)
+                    }
+                  />
+                  <div>Ile z wybranych przedmiotów musi pasować?</div>
+                </div>
+                <p className="description">
+                  *Jeśli nie jesteś pewien, które dokładnie przedmioty chcesz
+                  mieć rozszerzone, oraz jesteś otwarty na możliwość, że nie
+                  wszystkie wybrane przedmioty będą dostępne w wybranej szkole,
+                  wybierz mniejszą liczbę. Przykład: Zaznaczyłeś chemię,
+                  biologię i angielski. Jeśli tylko te trzy przedmioty Cię
+                  interesują, zaznacz "3". Wtedy wyświetlimy Ci propozycje
+                  profili tylko z tymi przedmiotami. Jeśli chcesz również
+                  zobaczyć więcej wyników z dopasowanymi tylko dwoma wybranymi
+                  przedmiotami, np. biologia, chemia, geografia - wybierz "2",
+                  itd."
+                </p>
+              </Form.Item>
+            </>
+          )}
 
           <div className="subSectionDivider">
             <p>Języki obce</p>
           </div>
-          <Form.Item
-            name="extendedSubjectsDontCount"
-            className="customFormItem"
-          >
-            <div className="formRowContainer">
-              <Checkbox className="text-white mb-4">
-                Nie bierz pod uwagę (każdy język mi odpowiada)
-              </Checkbox>
-            </div>
-          </Form.Item>
 
-          <Form.Item name="languages" className="customFormItem">
-            <Checkbox.Group options={languages} style={{ width: "100%" }} />
-          </Form.Item>
+          <div className="formRowContainer mb-5">
+            <Checkbox
+              className="text-white mb-4"
+              onChange={handleAnyLanguageCheckboxChange}
+            >
+              Nie bierz pod uwagę (każdy język mi odpowiada)
+            </Checkbox>
+          </div>
+
+          {!anyLanguageCheckbox && (
+            <Form.Item name="languages" className="customFormItem">
+              <Checkbox.Group options={languages} style={{ width: "100%" }} />
+            </Form.Item>
+          )}
 
           <Form.Item
             name="languagesCount"
