@@ -37,8 +37,6 @@ const List: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [rangeValue, setRangeValue] = useState<[number, number]>([10, 190]);
 
-  const subjectNames = subjects.map((subject) => subject.fullName);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -390,7 +388,7 @@ const List: React.FC = () => {
             allowClear
             clearIcon={<CloseCircleOutlined className="closeCircle" />}
           >
-            {subjectNames.map((subject, index) => (
+            {subjects.map((subject, index) => (
               <Option key={index} value={subject}>
                 {subject}
               </Option>
