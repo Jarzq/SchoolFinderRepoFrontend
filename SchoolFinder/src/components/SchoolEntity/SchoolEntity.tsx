@@ -32,12 +32,12 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
         <span className="entityValue">
           {data.extendedSubjects && data.extendedSubjects.length > 0 ? (
             data.extendedSubjects.map((subject) => (
-              <Tag color="#AA9CFF" key={subject}>
+              <Tag color="#6559af" key={subject}>
                 {subject.toUpperCase()}
               </Tag>
             ))
           ) : (
-            <Tag color="#AA9CFF">{data.specialization?.toUpperCase()}</Tag>
+            <Tag color="#6559af">{data.specialization?.toUpperCase()}</Tag>
           )}
         </span>
       </p>
@@ -46,7 +46,7 @@ const SchoolEntity: React.FC<SchoolEntityProps> = ({ data }) => {
         Języki obce:
         <span className="entityValue">
           {data.languages.map((language) => (
-            <Tag color="#68B8DB" key={language}>
+            <Tag color="#207ea7" key={language}>
               {language.toUpperCase()}
             </Tag>
           ))}

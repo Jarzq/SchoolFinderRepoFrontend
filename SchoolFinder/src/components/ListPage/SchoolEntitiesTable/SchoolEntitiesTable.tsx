@@ -30,12 +30,12 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
         <>
           {extendedSubjects && extendedSubjects.length > 0 ? (
             extendedSubjects.map((subject) => (
-              <Tag color="#AA9CFF" key={subject}>
+              <Tag color="#6559af" key={subject}>
                 {subject.toUpperCase()}
               </Tag>
             ))
           ) : (
-            <Tag color="#AA9CFF">{record.specialization}</Tag>
+            <Tag color="#6559af">{record.specialization}</Tag>
           )}
         </>
       ),
@@ -48,7 +48,7 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
         <>
           {languages.map((language) => {
             return (
-              <Tag color="#68B8DB" key={language}>
+              <Tag color="#207ea7" key={language}>
                 {language.toUpperCase()}
               </Tag>
             );
