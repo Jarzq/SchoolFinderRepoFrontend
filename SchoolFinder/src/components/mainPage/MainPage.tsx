@@ -26,11 +26,13 @@ const Main: React.FC = () => {
           przedmioty i wiele innych. Nasz algorytm odnajdzie i przedstawi Ci
           szkoły oraz oddziały, które doskonale spełniają Twoje oczekiwania!
         </p>
-        <Link to="/calculatorPage">
-          <button className="actionButton bg-primaryPurple">
-            Dopasuj klasę
-          </button>
-        </Link>
+        <div>
+          <Link to="/calculatorPage">
+            <button className="actionButton bg-primaryPurple">
+              Dopasuj klasę
+            </button>
+          </Link>
+        </div>
 
         <div className="titleListSection">
           <img src={lupa} alt="Purple Illustration" />
@@ -49,12 +51,13 @@ const Main: React.FC = () => {
             </p>
           </div>
         </div>
-
-        <Link to="/listPage">
-          <button className="actionListButton bg-primaryBlue">
-            Przejdź do listy szkół
-          </button>
-        </Link>
+        <div>
+          <Link to="/listPage">
+            <button className="actionListButton bg-primaryBlue">
+              Przejdź do listy szkół
+            </button>
+          </Link>
+        </div>
       </div>
     </>
   );
