@@ -35,6 +35,7 @@ const Calculator: React.FC = () => {
   >();
   const [districts, setDistricts] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
+  const [specializations, setSpecializations] = useState<string[]>([]);
   const [knowPoints, setKnowPoints] = useState(false);
   const [swiadectwoPoints, setSwiadectwoPoints] = useState<number>(0);
   const [wolontariatPoints, setWolontariatPoints] = useState<number>(0);
@@ -53,10 +54,13 @@ const Calculator: React.FC = () => {
     useState<number>(0);
   const [konkursyPoints, setKonkursyPoints] = useState<number>(0);
   const [alreadyKnowPoints, setAlreadyKnowPoints] = useState<number>(0);
-  const [anyExctendedSubjectsCheckbox, setAnyExctendedSubjectsCheckbox] =
+  const [anyExtendedSubjectsCheckbox, setAnyExtendedSubjectsCheckbox] =
     useState(false);
   const [anyDistrictCheckbox, setAnyDistrictCheckbox] = useState(false);
   const [anyLanguageCheckbox, setAnyLanguageCheckbox] = useState(false);
+  const [anySpecializationCheckbox, setAnySpecializationCheckbox] =
+    useState(false);
+  const [schoolType, setSchoolType] = useState<string>("");
 
   const onFinish = async (values) => {
     try {
@@ -66,8 +70,10 @@ const Calculator: React.FC = () => {
         pointsMin: rangeValue[0],
         pointsMax: rangeValue[1],
         prefferedSchoolType: values.schoolType,
-        prefferedSpecialization: values.prefferedSpecialization,
-        prefferedExtendedSubjects: anyExctendedSubjectsCheckbox
+        prefferedSpecializations: anySpecializationCheckbox
+          ? null
+          : values.specializations,
+        prefferedExtendedSubjects: anyExtendedSubjectsCheckbox
           ? null
           : values.extendedSubjects,
         numberMatchingSubjects: extendedSubjectsCount,
@@ -154,13 +160,30 @@ const Calculator: React.FC = () => {
       } catch (error) {
         console.error("Error fetching languages:", error);
       }
+
+      try {
+        const specializationsData = await SchoolApiService.getSpecializations();
+        if (Array.isArray(specializationsData)) {
+          setSpecializations(specializationsData);
+        } else {
+          console.error(
+            "specializations data is not an array:",
+            specializationsData
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching specializations:", error);
+      }
     };
 
     fetchData();
   }, []);
+  const handleSchoolType = (e) => {
+    setSchoolType(e.target.value);
+  };
 
   const handleAnySubjectsCheckboxChange = (e: CheckboxChangeEvent) => {
-    setAnyExctendedSubjectsCheckbox(e.target.checked);
+    setAnyExtendedSubjectsCheckbox(e.target.checked);
   };
 
   const handleAnyDistrictCheckboxChange = (e: CheckboxChangeEvent) => {
@@ -169,6 +192,10 @@ const Calculator: React.FC = () => {
 
   const handleAnyLanguageCheckboxChange = (e: CheckboxChangeEvent) => {
     setAnyLanguageCheckbox(e.target.checked);
+  };
+
+  const handleAnySpecializationCheckboxChange = (e: CheckboxChangeEvent) => {
+    setAnySpecializationCheckbox(e.target.checked);
   };
 
   const handleSwiadectwoCheckboxChange = (e: CheckboxChangeEvent) => {
@@ -488,63 +515,103 @@ const Calculator: React.FC = () => {
             className="customFormItem"
             rules={[{ required: true, message: "Proszę wybrać typ szkoły" }]}
           >
-            <Radio.Group>
+            <Radio.Group onChange={handleSchoolType}>
               <Radio value="Liceum"> Liceum </Radio>
               <Radio value="Technikum"> Technikum </Radio>
               <Radio value="SzkolaBranzowa"> Szkoła branżowa </Radio>
             </Radio.Group>
           </Form.Item>
 
-          <div className="subSectionDivider">
-            <p>Przedmioty rozszerzone</p>
-          </div>
-
-          <div className="formRowContainer mb-5">
-            <Checkbox
-              className="text-white mb-4"
-              onChange={handleAnySubjectsCheckboxChange}
-            >
-              Nie bierz pod uwagę (każdy przedmiot mi odpowiada)
-            </Checkbox>
-          </div>
-
-          {!anyExctendedSubjectsCheckbox && (
+          {schoolType === "Liceum" ? (
             <>
-              <Form.Item name="extendedSubjects" className="customFormItem">
-                <Checkbox.Group options={subjects} style={{ width: "100%" }} />
-              </Form.Item>
-              <Form.Item
-                name="extendedSubjectsCount"
-                labelCol={{ flex: "auto" }}
-                wrapperCol={{ flex: "none" }}
-                className="customFormItem"
-                labelAlign="left"
-              >
-                <div className="formRowContainer">
-                  <Input
-                    max={3}
-                    min={1}
-                    className="inputNumber"
-                    placeholder="1"
-                    type="number"
-                    onChange={(e) =>
-                      handleExtendedSubjectsCountChange(e.target.value)
-                    }
-                  />
-                  <div>Ile z wybranych przedmiotów musi pasować?</div>
-                </div>
-                <p className="description">
-                  *Jeśli nie jesteś pewien, które dokładnie przedmioty chcesz
-                  mieć rozszerzone, oraz jesteś otwarty na możliwość, że nie
-                  wszystkie wybrane przedmioty będą dostępne w wybranej szkole,
-                  wybierz mniejszą liczbę. Przykład: Zaznaczyłeś chemię,
-                  biologię i angielski. Jeśli tylko te trzy konkretne przedmioty
-                  Cię interesują, zaznacz "3". Wtedy wyświetlimy Ci propozycje
-                  profili tylko z tymi przedmiotami. Jeżeli zaznaczysz "2" to
-                  wyświetlimy Ci propozycje, w których będą rozszerzone
-                  przynajmniej dwa z wybranych przedmiotów itd.
-                </p>
-              </Form.Item>
+              <div className="subSectionDivider">
+                <p>Przedmioty rozszerzone</p>
+              </div>
+              <div className="formRowContainer mb-5">
+                <Checkbox
+                  className="text-white mb-4"
+                  onChange={handleAnySubjectsCheckboxChange}
+                >
+                  Nie bierz pod uwagę (każdy przedmiot mi odpowiada)
+                </Checkbox>
+              </div>
+
+              {!anyExtendedSubjectsCheckbox && (
+                <>
+                  <Form.Item name="extendedSubjects" className="customFormItem">
+                    <Checkbox.Group
+                      options={subjects}
+                      style={{ width: "100%" }}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="extendedSubjectsCount"
+                    labelCol={{ flex: "auto" }}
+                    wrapperCol={{ flex: "none" }}
+                    className="customFormItem"
+                    labelAlign="left"
+                  >
+                    <div className="formRowContainer">
+                      <Input
+                        max={3}
+                        min={1}
+                        className="inputNumber"
+                        placeholder="1"
+                        type="number"
+                        onChange={(e) =>
+                          handleExtendedSubjectsCountChange(e.target.value)
+                        }
+                      />
+                      <div>Ile z wybranych przedmiotów musi pasować?</div>
+                    </div>
+                    <p className="description">
+                      *Jeśli nie jesteś pewien, które dokładnie przedmioty
+                      chcesz mieć rozszerzone, oraz jesteś otwarty na możliwość,
+                      że nie wszystkie wybrane przedmioty będą dostępne w
+                      wybranej szkole, wybierz mniejszą liczbę. Przykład:
+                      Zaznaczyłeś chemię, biologię i angielski. Jeśli tylko te
+                      trzy konkretne przedmioty Cię interesują, zaznacz "3".
+                      Wtedy wyświetlimy Ci propozycje profili tylko z tymi
+                      przedmiotami. Jeżeli zaznaczysz "2" to wyświetlimy Ci
+                      propozycje, w których będą rozszerzone przynajmniej dwa z
+                      wybranych przedmiotów itd.
+                    </p>
+                  </Form.Item>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="subSectionDivider">
+                <p>Specjalizacja</p>
+              </div>
+
+              <div className="formRowContainer mb-5">
+                <Checkbox
+                  className="text-white mb-4"
+                  onChange={handleAnySpecializationCheckboxChange}
+                >
+                  Nie bierz pod uwagę (każda specjalizacja mi odpowiada)
+                </Checkbox>
+              </div>
+
+              {!anySpecializationCheckbox && (
+                <>
+                  <Form.Item name="specializations" className="customFormItem">
+                    <Select
+                      mode="multiple"
+                      placeholder="Wybierz specializacje"
+                      className="selectStyle mr-5 specializationSelect"
+                    >
+                      {specializations.map((spec) => (
+                        <Select.Option key={spec} value={spec}>
+                          {spec}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </>
+              )}
             </>
           )}
 

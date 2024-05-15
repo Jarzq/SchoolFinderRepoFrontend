@@ -6,7 +6,7 @@ export interface PrefferedSchoolsRequest {
   pointsMax: number;
   pointsMin: number;
   prefferedSchoolType: string;
-  prefferedSpecialization: string;
+  prefferedSpecializations: string;
   prefferedExtendedSubjects: string[];
   numberMatchingSubjects: number;
   prefferedLanguages: string[];
