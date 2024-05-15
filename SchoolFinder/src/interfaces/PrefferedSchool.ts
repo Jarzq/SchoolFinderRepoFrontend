@@ -3,8 +3,8 @@ import { SchoolEntityType } from "./SchoolEntityType";
 export interface PrefferedSchoolsRequest {
   prefferedDzielnica: string[];
   acheivedPunkty: number;
-  rangeIncrease: number;
-  rangeDecrease: number;
+  pointsMax: number;
+  pointsMin: number;
   prefferedSchoolType: string;
   prefferedSpecialization: string;
   prefferedExtendedSubjects: string[];

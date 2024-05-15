@@ -45,8 +45,8 @@ const Calculator: React.FC = () => {
   const [languageExamScore, setLanguageExamScore] = useState<number>(0);
   const [polishGradeScore, setPolishGradeScore] = useState<number>(0);
   const [mathGradeScore, setMathGradeScore] = useState<number>(0);
-  const [extendedSubjectsCount, setExtendedSubjectsCount] = useState<number>(0);
-  const [languagesCount, setLanguagesCount] = useState<number>(0);
+  const [extendedSubjectsCount, setExtendedSubjectsCount] = useState<number>(1);
+  const [languagesCount, setLanguagesCount] = useState<number>(1);
   const [extraSubject1GradeScore, setExtraSubject1GradeScore] =
     useState<number>(0);
   const [extraSubject2GradeScore, setExtraSubject2GradeScore] =
@@ -63,8 +63,8 @@ const Calculator: React.FC = () => {
       const requestData: PrefferedSchoolsRequest = {
         prefferedDzielnica: anyDistrictCheckbox ? null : values.district,
         acheivedPunkty: totalPoints,
-        rangeIncrease: rangeValue[0],
-        rangeDecrease: rangeValue[1],
+        pointsMin: rangeValue[0],
+        pointsMax: rangeValue[1],
         prefferedSchoolType: values.schoolType,
         prefferedSpecialization: values.prefferedSpecialization,
         prefferedExtendedSubjects: anyExctendedSubjectsCheckbox
@@ -254,6 +254,7 @@ const Calculator: React.FC = () => {
         onFinish={onFinish}
         autoComplete="off"
         colon={false}
+        scrollToFirstError={true}
       >
         <div className="sectionDivider mt-40">
           <h1>1. Oblicz swoje punkty</h1>
@@ -482,7 +483,11 @@ const Calculator: React.FC = () => {
             <p>Typ szkoły</p>
           </div>
 
-          <Form.Item name="schoolType" className="customFormItem">
+          <Form.Item
+            name="schoolType"
+            className="customFormItem"
+            rules={[{ required: true, message: "Proszę wybrać typ szkoły" }]}
+          >
             <Radio.Group>
               <Radio value="Liceum"> Liceum </Radio>
               <Radio value="Technikum"> Technikum </Radio>
@@ -517,6 +522,8 @@ const Calculator: React.FC = () => {
               >
                 <div className="formRowContainer">
                   <Input
+                    max={3}
+                    min={1}
                     className="inputNumber"
                     placeholder="1"
                     type="number"
@@ -531,12 +538,11 @@ const Calculator: React.FC = () => {
                   mieć rozszerzone, oraz jesteś otwarty na możliwość, że nie
                   wszystkie wybrane przedmioty będą dostępne w wybranej szkole,
                   wybierz mniejszą liczbę. Przykład: Zaznaczyłeś chemię,
-                  biologię i angielski. Jeśli tylko te trzy przedmioty Cię
-                  interesują, zaznacz "3". Wtedy wyświetlimy Ci propozycje
-                  profili tylko z tymi przedmiotami. Jeśli chcesz również
-                  zobaczyć więcej wyników z dopasowanymi tylko dwoma wybranymi
-                  przedmiotami, np. biologia, chemia, geografia - wybierz "2",
-                  itd."
+                  biologię i angielski. Jeśli tylko te trzy konkretne przedmioty
+                  Cię interesują, zaznacz "3". Wtedy wyświetlimy Ci propozycje
+                  profili tylko z tymi przedmiotami. Jeżeli zaznaczysz "2" to
+                  wyświetlimy Ci propozycje, w których będą rozszerzone
+                  przynajmniej dwa z wybranych przedmiotów itd.
                 </p>
               </Form.Item>
             </>
@@ -571,7 +577,7 @@ const Calculator: React.FC = () => {
             <div className="formRowContainer">
               <Input
                 min={1}
-                max={10}
+                max={3}
                 className="inputNumber"
                 placeholder="1"
                 type="number"
@@ -580,15 +586,14 @@ const Calculator: React.FC = () => {
               <div>Ile z wybranych języków musi pasować?</div>
             </div>
             <p className="description">
-              *Jeśli nie jesteś pewien, które dokładnie przedmioty chcesz mieć
+              *Jeśli nie jesteś pewien, które dokładnie języki chcesz mieć
               rozszerzone, oraz jesteś otwarty na możliwość, że nie wszystkie
-              wybrane przedmioty będą dostępne w wybranej szkole, wybierz
-              mniejszą liczbę. Przykład: Zaznaczyłeś chemię, biologię i
-              angielski. Jeśli tylko te trzy przedmioty Cię interesują, zaznacz
-              "3". Wtedy wyświetlimy Ci propozycje profili tylko z tymi
-              przedmiotami. Jeśli chcesz również zobaczyć więcej wyników z
-              dopasowanymi tylko dwoma wybranymi przedmiotami, np. biologia,
-              chemia, geografia - wybierz "2", itd."
+              wybrane języki będą dostępne w wybranej szkole, wybierz mniejszą
+              liczbę. Przykład: Zaznaczyłeś Język angielski i Język hiszpański.
+              Jeśli tylko te dwa konkretne języki Cię interesują, zaznacz "2".
+              Wtedy wyświetlimy Ci propozycje profili tylko z tymi dwoma
+              językami. Jeżeli zaznaczysz "1" to wyświetlimy Ci propozycje, w
+              których jest przynajmniej jeden z wybranych języków itd.
             </p>
           </Form.Item>
 
