@@ -1,6 +1,23 @@
 {
+  "name": "school-finder-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@types/react-router-dom": "^5.3.3",
-    "react-router-dom": "^6.22.1"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.22.1",
+    "@types/react-router-dom": "^5.3.3"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0",
+    "@vitejs/plugin-react": "^3.0.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
