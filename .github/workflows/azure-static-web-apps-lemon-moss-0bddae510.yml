@@ -27,7 +27,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          app_location: "./" # Root directory of your project (default for Vite.js apps)
+          app_location: "./SchoolFinder" # Root directory of your project (default for Vite.js apps)
           api_location: "" # Leave empty unless you have an API
           output_location: "dist" # Directory containing the built app (default for Vite.js apps)
           app_build_command: "npm run build"
