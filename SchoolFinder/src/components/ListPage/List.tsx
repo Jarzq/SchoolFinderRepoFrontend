@@ -7,7 +7,6 @@ import {
   SchoolEntityType,
 } from "../../interfaces/SchoolEntityType";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import Subject from "../../interfaces/SubjectType";
 import SchoolApiService from "../../infrastructure/api/schoolsApi/schoolsApiService";
 
 const { Option } = Select;
@@ -30,7 +29,7 @@ const List: React.FC = () => {
     null
   );
   const [sortOption, setSortOption] = useState<string | null>(null);
-  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [subjects, setSubjects] = useState<string[]>([]);
   const [districts, setDistricts] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [specializations, setSpecialzations] = useState<string[]>([]);
@@ -202,9 +201,9 @@ const List: React.FC = () => {
     );
   };
 
-  const handleSliderChange = (value: [number, number]) => {
+  const handleSliderChange = (value: number[]) => {
     if (value[0] <= value[1] && value[0] > 0 && value[1] < 1000) {
-      setRangeValue(value);
+      setRangeValue(value as [number, number]);
     }
     filterData(
       searchValue,
@@ -214,7 +213,7 @@ const List: React.FC = () => {
       selectedSpecialization,
       selectedSubjects,
       sortOption,
-      value
+      value as [number, number]
     );
   };
 
@@ -272,6 +271,7 @@ const List: React.FC = () => {
 
     if (type !== null && type !== undefined) {
       filtered = filtered.filter((entity) => entity.schoolType === type);
+      console.log(type, filtered)
     }
 
     if (specialization !== null && specialization !== undefined) {

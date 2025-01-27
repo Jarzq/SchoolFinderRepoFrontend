@@ -17,5 +17,5 @@ export interface SchoolEntityType {
 export enum SCHOOL_TYPE {
   Liceum = "Liceum",
   Technikum = "Technikum",
-  SzkolaBranzowa = "Szkoła Branżowa",
+  Branżowa = "Branżowa",
 }

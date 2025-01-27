@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import SubPage1 from "./pages/CalculatorPage";

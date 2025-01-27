@@ -62,7 +62,7 @@ const Calculator: React.FC = () => {
     useState(false);
   const [schoolType, setSchoolType] = useState<string>("");
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: Record<string, any>) => {
     try {
       const requestData: PrefferedSchoolsRequest = {
         prefferedDzielnica: anyDistrictCheckbox ? null : values.district,
@@ -178,7 +178,7 @@ const Calculator: React.FC = () => {
 
     fetchData();
   }, []);
-  const handleSchoolType = (e) => {
+  const handleSchoolType = (e: Record<string, any>) => {
     setSchoolType(e.target.value);
   };
 
@@ -208,9 +208,9 @@ const Calculator: React.FC = () => {
     setWolontariatPoints(e.target.checked ? PUNKTY_ZA_WOLONTARIAT : 0);
   };
 
-  const handleSliderChange = (value: [number, number]) => {
+  const handleSliderChange = (value: number[]) => {
     if (value[0] <= value[1] && value[0] > 0 && value[1] < 1000) {
-      setRangeValue(value);
+      setRangeValue(value as [number, number]);
     }
   };
 
@@ -245,9 +245,7 @@ const Calculator: React.FC = () => {
     }
   };
 
-  const handleAlreadyKnowCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleAlreadyKnowCheckboxChange = (e: CheckboxChangeEvent) => {
     setKnowPoints(e.target.checked);
     if (!e.target.checked) {
       setAlreadyKnowPoints(0);
@@ -410,7 +408,7 @@ const Calculator: React.FC = () => {
                 />
               </div>
               <div className="subSectionDivider">
-                <p>dodatkowe aktywności</p>
+                <p>Dodatkowe aktywności</p>
               </div>
               <Form.Item
                 name="swiadectwoZWyroznieniem"
@@ -469,6 +467,8 @@ const Calculator: React.FC = () => {
                   type="number"
                   className="inputStyle"
                   placeholder="Uzyskane punkty"
+                  min={0}
+                  max={200}
                 />
               </div>
             </Form.Item>
@@ -518,7 +518,7 @@ const Calculator: React.FC = () => {
             <Radio.Group onChange={handleSchoolType}>
               <Radio value="Liceum"> Liceum </Radio>
               <Radio value="Technikum"> Technikum </Radio>
-              <Radio value="SzkolaBranzowa"> Szkoła branżowa </Radio>
+              <Radio value="Branżowa"> Szkoła branżowa </Radio>
             </Radio.Group>
           </Form.Item>
 

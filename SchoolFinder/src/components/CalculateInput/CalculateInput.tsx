@@ -27,7 +27,7 @@ const CalculateInput: React.FC<CalculateInputProps> = ({
   const [points, setPoints] = useState<string>("");
 
   useEffect(() => {
-    if (!isNaN(inputValue) && inputValue !== undefined) {
+    if (inputValue !== undefined && !isNaN(inputValue)) {
       const updatedPoints = CalculateSinglePoints(
         isGrade,
         "",

@@ -2,6 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import { Button } from "@nextui-org/react";
 import { Link } from "react-router-dom";
+import { Popover } from "antd";
 
 const Navbar: React.FC = () => {
   return (
@@ -18,9 +19,14 @@ const Navbar: React.FC = () => {
             <div className="buttonNavbar">Lista szkół i oddziałów</div>
           </Link>
         </div>
-        <Button as={Link} color="primary" href="#" variant="flat">
-          Zaloguj się
-        </Button>
+        <Popover
+          content={"W przypadku problemów z działaniem strony lub pytań, prosimy o kontakt mailowy na adres: abc@gmail.com"} 
+          trigger="click" className="PopoverContainer">
+          <Button as={Link} color="primary" href="#" variant="flat">
+             Pomoc
+          </Button>
+        </Popover>
+        
       </div>
     </div>
   );

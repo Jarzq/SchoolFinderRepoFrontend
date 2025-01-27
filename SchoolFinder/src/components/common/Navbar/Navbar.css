@@ -26,3 +26,6 @@
   cursor: pointer;
   color: #aa9cff;
 }
+.ant-popover .ant-popover-inner{
+  max-width: 20vw;
+}

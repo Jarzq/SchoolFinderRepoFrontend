@@ -12,7 +12,7 @@ const SchoolEntitiesTable: React.FC<SchoolEntitiesTableProps> = ({ data }) => {
       title: "l.p",
       dataIndex: "liczbaPorzadkowa",
       key: "liczbaPorzadkowa",
-      render: (text: string, record: number, index: number) => {
+      render: (_: any, _record: any, index: number) => {
         return <span>{index + 1}</span>;
       },
     },
